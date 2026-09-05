@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { parse } from "yaml";
 
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-export const names = [
+const baselineNames = [
   "setup-repo",
   "adopt-standards",
   "upgrade-standards",
@@ -13,6 +13,8 @@ export const names = [
   "update-project-skills",
   "update-dependencies",
 ];
+
+export const names = [...baselineNames, "tune-agent-instructions"];
 
 export async function validateSkill(folder: string) {
   const entry = await readFile(resolve(folder, "SKILL.md"), "utf8");
@@ -55,7 +57,7 @@ export async function bundle(base: string, check: boolean) {
   for (const name of names) {
     const folder = resolve(base, "skills", name);
     if (!check) await mkdir(resolve(folder, "references"), { recursive: true });
-    for (const reference of references) {
+    for (const reference of baselineNames.includes(name) ? references : []) {
       const source = await readFile(resolve(base, "standards", reference), "utf8");
       const destination = resolve(folder, "references", reference);
       if (check) {

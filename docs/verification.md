@@ -34,3 +34,9 @@ The website verifies the Bun/TanStack Start path. Other frameworks, native clien
 The approved Pages change adds a `/skills/` deployment variant while retaining `/` for Docker. Local verification passed for both variants: 17 tests, type/lint/format checks, all 14 pages plus the 404 page, base-aware asset/document targets, deep-link browser navigation, search, clipboard, favicon and 404 recovery. The root-path Docker image also builds successfully.
 
 The workflow validates both variants and deploys only successful main-branch runs. The public deployment status is available in the repository's GitHub Actions history. No Harbor or GitOps configuration is changed.
+
+## Agent-instruction audit skill
+
+`tune-agent-instructions` was added from the official GPT-6 Astra behavioral guidance. The new skill passed standalone copy installation and reference validation. The full suite passed 21 tests, and both hosting variants built 15 content pages plus the 404 page. Specialized references remain separate from the seven baseline-bundled workflows.
+
+An independent Luna agent used the skill for a read-only fixture audit. It identified repeated permission requests, edits during explanation requests, mandatory delegation, and disproportionate testing while preserving the explicit review/deployment gates and worktree restriction. A direct before/after comparison confirmed the fixture was unchanged. This was an executed audit with reasoning-based scenario assessment, not an API-based Astra behavior benchmark.

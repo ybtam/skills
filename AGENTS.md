@@ -2,7 +2,7 @@
 
 Dear agent,
 
-This repository publishes seven portable skills and the standards they use. Read the approved plan in `.codex/plans/2026-09-05-repository-skills/plan.md` when changing their scope. Build and verify all skills before extending the website.
+This repository publishes portable skills and the standards they use. Read the approved plan in `.codex/plans/2026-09-05-repository-skills/plan.md` when changing their scope. Build and verify all skills before extending the website.
 
 Keep the code small and readable. Every abstraction needs a concrete use. Preserve unrelated work; questions about the repository are read-only. If Git history or a conflict prevents the intended change, explain it rather than creating a worktree to force a resolution. Do not remove directories, kill servers, force-push, or introduce hashing to solve routine problems.
 

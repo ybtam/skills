@@ -9,7 +9,7 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "YBTAM Skills — portable engineering workflows" },
-      { name: "description", content: "Seven portable skills and the standards behind them." },
+      { name: "description", content: "Portable skills and the standards behind them." },
     ],
     links: [
       { rel: "stylesheet", href: appStyles },

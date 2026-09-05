@@ -23,7 +23,7 @@ function StandardDetails() {
         <h1>{standard.title}</h1>
       </div>
       <article className="prose standard-prose">
-        <Markdown>{standard.body}</Markdown>
+        <Markdown source={standard.source}>{standard.body}</Markdown>
       </article>
     </div>
   );

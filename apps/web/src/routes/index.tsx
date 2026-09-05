@@ -35,7 +35,7 @@ function Catalog() {
         <div className="section-intro">
           <div>
             <p className="eyebrow">THE TOOLKIT</p>
-            <h2>Seven skills, one clear path.</h2>
+            <h2>{skills.length} skills, one clear path.</h2>
           </div>
           <p>
             Each skill works on its own after installation. Together they guide a repository from

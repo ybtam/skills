@@ -11,21 +11,30 @@ npx skills@latest add ybtam/skills --skill setup-repo
 
 Select your agents and keep project scope. The repository must be published before the GitHub commands can install this implementation. For a local checkout, replace `ybtam/skills` with its absolute path.
 
-| Skill                  | Use it for                                                           |
-| ---------------------- | -------------------------------------------------------------------- |
-| setup-repo             | A new project and agreed tooling, guidance and local workflow        |
-| adopt-standards        | Bounded standards adoption in an existing repository                 |
-| upgrade-standards      | Version-aware updates to selected standards areas                    |
-| migrate-to-monorepo    | Moving an existing app into workspaces without changing its behavior |
-| install-project-skills | Selecting and installing skills for your agents                      |
-| update-project-skills  | Automatic upstream updates that preserve local edits                 |
-| update-dependencies    | Dependency updates with documented major-version migrations          |
+| Skill                   | Use it for                                                                 |
+| ----------------------- | -------------------------------------------------------------------------- |
+| setup-repo              | A new project and agreed tooling, guidance and local workflow              |
+| adopt-standards         | Bounded standards adoption in an existing repository                       |
+| upgrade-standards       | Version-aware updates to selected standards areas                          |
+| migrate-to-monorepo     | Moving an existing app into workspaces without changing its behavior       |
+| install-project-skills  | Selecting and installing skills for your agents                            |
+| update-project-skills   | Automatic upstream updates that preserve local edits                       |
+| update-dependencies     | Dependency updates with documented major-version migrations                |
+| tune-agent-instructions | Auditing and improving agent guidance while preserving explicit boundaries |
+
+## Tune agent guidance
+
+Install `tune-agent-instructions` to audit AGENTS.md, skills, and prompts using the [official Astra prompting guidance](https://developers.openai.com/api/docs/guides/latest-model?model=gpt-6-astra). It reports source-grounded findings by default and edits only when requested, preserving explicit project boundaries.
+
+```sh
+npx skills@latest add ybtam/skills --skill tune-agent-instructions
+```
 
 ## How it works
 
 Inspect the repository, answer unresolved questions, review a concrete plan, apply it, and verify the result. Defaults are recommendations; project choices persist separately in `.project-standards.json`. Plannotator is the default review tool. Skills install per repository; Codegraph and Plannotator setup are included. Publishing and deployment are separate decisions.
 
-The personal baseline lives in [standards](standards/baseline.md). Shared references are bundled into every skill so each works on its own. Edit source references and run `bun run skills:bundle`; `bun run check` checks freshness, portability, types, tests and lint/format.
+The personal baseline lives in [standards](standards/baseline.md). Setup and maintenance skills bundle the shared baseline references. Specialized skills carry their own references, so each installed skill works on its own. Edit source references and run `bun run skills:bundle`; `bun run check` checks freshness, portability, types, tests and lint/format.
 
 Use Bun 1.4.2 as recorded in `.bun-version`, then `bun install --frozen-lockfile`. Applications live in `apps/`, shared config in `configs/`, and shared packages are added only for actual consumers.
 

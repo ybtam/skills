@@ -1,4 +1,4 @@
-import { cp, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { cp, mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import { afterEach, expect, test } from "vitest";
@@ -38,4 +38,17 @@ test("references cannot escape the installed skill", async () => {
   const file = resolve(destination, "SKILL.md");
   await writeFile(file, `${await readFile(file, "utf8")}\n[hidden dependency](../standards.md)\n`);
   await expect(validateSkill(destination)).rejects.toThrow("escapes installed skill");
+});
+
+test("bundling preserves specialized references without adding baseline documents", async () => {
+  const destination = await mkdtemp(resolve(tmpdir(), "ybtam-bundle-test-"));
+  temporary.push(destination);
+  await cp(resolve(root, "standards"), resolve(destination, "standards"), { recursive: true });
+  await cp(resolve(root, "skills"), resolve(destination, "skills"), { recursive: true });
+  const references = resolve(destination, "skills/tune-agent-instructions/references");
+  const guide = await readFile(resolve(references, "astra-guidance.md"), "utf8");
+  await bundle(destination, false);
+  expect(await readdir(references)).toEqual(["astra-guidance.md"]);
+  expect(await readFile(resolve(references, "astra-guidance.md"), "utf8")).toBe(guide);
+  await expect(bundle(destination, true)).resolves.toBeUndefined();
 });

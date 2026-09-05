@@ -38,7 +38,7 @@ function SkillDetails() {
           </a>
         </aside>
         <article className="prose">
-          <Markdown>{skill.body}</Markdown>
+          <Markdown source={skill.source}>{skill.body}</Markdown>
         </article>
       </div>
     </div>
