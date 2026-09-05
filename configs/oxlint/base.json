@@ -1,0 +1,15 @@
+{
+  "jsPlugins": [{ "name": "perfectionist", "specifier": "eslint-plugin-perfectionist" }],
+  "rules": {
+    "perfectionist/sort-imports": ["error", { "type": "natural", "order": "asc" }],
+    "perfectionist/sort-named-imports": ["error", { "type": "natural", "order": "asc" }]
+  },
+  "ignorePatterns": [
+    ".agents/**",
+    ".codex/**",
+    "node_modules/**",
+    "**/dist/**",
+    "**/.output/**",
+    "**/routeTree.gen.ts"
+  ]
+}

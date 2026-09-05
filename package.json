@@ -1,0 +1,33 @@
+{
+  "name": "@ybtam/skills",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "skills:bundle": "bun scripts/skills.ts bundle",
+    "skills:check": "bun scripts/skills.ts check",
+    "typecheck": "tsc --noEmit && turbo run typecheck",
+    "test": "vitest run",
+    "lint": "oxlint --config configs/oxlint/base.json",
+    "format": "oxfmt --config configs/oxfmt/base.json --ignore-path .formatterignore",
+    "format:check": "oxfmt --check --config configs/oxfmt/base.json --ignore-path .formatterignore",
+    "check": "bun run skills:check && bun run typecheck && bun run test && bun run lint && bun run format:check",
+    "build": "turbo run build && bun scripts/check-site.ts",
+    "dev": "turbo run dev"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.1",
+    "eslint-plugin-perfectionist": "5.11.0",
+    "oxfmt": "0.66.0",
+    "oxlint": "1.81.0",
+    "turbo": "^2.10.12",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.0",
+    "yaml": "^2.9.0"
+  },
+  "packageManager": "bun@1.4.2"
+}

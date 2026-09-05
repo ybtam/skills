@@ -1,0 +1,13 @@
+node_modules/
+.agents/
+.codex/
+.codegraph/
+skills/*/references/
+**/routeTree.gen.ts
+**/dist/
+**/.output/
+bun.lock
+skills-lock.json
+docs/design-session.md
+
+**/src/content/generated.ts

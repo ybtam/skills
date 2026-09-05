@@ -1,0 +1,270 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Repository skills — plan review</title><script>try{document.documentElement.classList.toggle('dark',(localStorage.getItem('theme')|| (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'))==='dark')}catch(e){}</script><style>
+:root{--bg:#f7f5ef;--panel:#fff;--text:#252c30;--muted:#546267;--line:#d4dad7;--accent:#17665c}html.dark{--bg:#131c21;--panel:#1b282f;--text:#e5edea;--muted:#adbfbc;--line:#395058;--accent:#81d6bd}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 system-ui,sans-serif}header{padding:20px max(22px,calc((100vw - 1120px)/2));border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:16px}button{font:inherit;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:7px 12px;cursor:pointer}main{max-width:1120px;margin:auto;padding:40px 24px 90px}h1{font-size:clamp(32px,5vw,56px);line-height:1.15;letter-spacing:-.035em}h2{margin-top:64px;padding-top:20px;border-top:2px solid var(--accent);font-size:26px;line-height:1.3}p,li{max-width:92ch}a{color:var(--accent)}table{border-collapse:collapse;width:100%;font-size:14px;background:var(--panel);margin:24px 0;display:block;overflow-x:auto}th,td{padding:14px;text-align:left;border:1px solid var(--line);vertical-align:top;min-width:145px}th{color:var(--accent)}pre{background:var(--panel);border:1px solid var(--line);padding:24px;border-radius:10px;overflow:auto;font-size:14px;line-height:1.55}code{font-family:ui-monospace,monospace}p code,td code{background:var(--panel);padding:2px 4px}header span{color:var(--muted);font-size:13px;letter-spacing:.07em;text-transform:uppercase}.intro{color:var(--muted)}nav{display:flex;flex-wrap:wrap;gap:10px 20px;padding:18px 0}nav a{font-size:14px}a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:4px}@media print{header button,nav{display:none}body{background:white;color:black}h2{break-after:avoid}tr{break-inside:avoid}}
+</style></head><body><header><span>Yi · 05 September 2026 · Approval review</span><button id="theme" type="button">Toggle theme</button></header><main><p class="intro">Implementation begins after approval. All seven skills precede the website.</p><nav aria-label="Plan sections"><a href="#1-outcome-and-review-boundary">1. Outcome and review boundary</a><a href="#2-seven-independently-installable-skills">2. Seven independently installable skills</a><a href="#3-portable-baseline-packaging">3. Portable baseline packaging</a><a href="#4-questionnaire-and-execution">4. Questionnaire and execution</a><a href="#5-personal-baseline">5. Personal baseline</a><a href="#6-context-based-structure-and-shared-configs">6. Context-based structure and shared configs</a><a href="#7-upstream-skills-codegraph-and-plannotator">7. Upstream skills, Codegraph, and Plannotator</a><a href="#8-version-tracking-and-migration-paths">8. Version tracking and migration paths</a><a href="#9-existing-repos-and-maintenance">9. Existing repos and maintenance</a><a href="#10-ci-docker-and-deployment-ownership">10. CI, Docker, and deployment ownership</a><a href="#11-website-evaluation-after-all-skills">11. Website evaluation after all skills</a><a href="#12-implementation-order-and-verification">12. Implementation order and verification</a><a href="#13-risks-and-resolution-rules">13. Risks and resolution rules</a><a href="#14-sources-and-evidence-limits">14. Sources and evidence limits</a></nav><h1 id="repository-skills-and-standards">Repository skills and standards</h1>
+<p>Seven portable skills, followed by a website built with their setup workflow.</p>
+<h2 id="1-outcome-and-review-boundary">1. Outcome and review boundary</h2>
+<p>Create ybtam/skills as a Vercel-skills-compatible collection for setting up and modernizing repositories. Yi's personal baseline starts the conversation; an evidence-led questionnaire produces project standards suited to the user. Support single applications, multiple frontends, shared backends, and other stacks without requiring a full-stack architecture.</p>
+<p>Deliver all seven skills before building the website in this repository. This review approves the implementation plan. Substantial target-project setup and migration plans still follow the chosen review process. Preparing CI does not authorize image publishing, infrastructure changes, or deployment.</p>
+<p>This Markdown is canonical; the HTML renders the same content. Earlier interview notes are historical. This plan consolidates the latest decisions, including Plannotator setup.</p>
+<h2 id="2-seven-independently-installable-skills">2. Seven independently installable skills</h2>
+<table>
+<thead>
+<tr>
+<th>Proposed identifier</th>
+<th>Responsibility</th>
+<th>Completion evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>setup-repo</td>
+<td>Inspect, interview, establish standards, configure agents/tooling, scaffold.</td>
+<td>Choices recorded; applicable checks pass; integrations work.</td>
+</tr>
+<tr>
+<td>adopt-standards</td>
+<td>Bring an existing repo toward selected standards through a bounded migration.</td>
+<td>Current behavior checked; plan reviewed; affected checks pass.</td>
+</tr>
+<tr>
+<td>upgrade-standards</td>
+<td>Compare applied standards with the current baseline and migrate selected areas.</td>
+<td>Successful versions advance only for verified areas.</td>
+</tr>
+<tr>
+<td>migrate-to-monorepo</td>
+<td>Reorganize the existing app into workspaces and update affected paths/tooling.</td>
+<td>Existing app still works; workspace dependencies and CI resolve.</td>
+</tr>
+<tr>
+<td>install-project-skills</td>
+<td>Install relevant skills for selected agents in project scope.</td>
+<td>Official sources and agent discovery verified.</td>
+</tr>
+<tr>
+<td>update-project-skills</td>
+<td>Automatically update untouched skills; preserve local edits.</td>
+<td>Updates verified; modified-skill conflicts reported.</td>
+</tr>
+<tr>
+<td>update-dependencies</td>
+<td>Update dependencies, including monorepos and major migrations.</td>
+<td>Official migration guides followed; affected checks pass.</td>
+</tr>
+</tbody>
+</table>
+<p>Each SKILL.md has a distinct description and normal automatic discovery. Upstream prerequisites are explicitly installed when required. No entry point silently depends on an uninstalled sibling skill.</p>
+<h2 id="3-portable-baseline-packaging">3. Portable baseline packaging</h2>
+<p>Maintain the baseline once under standards/. Maintain workflow instructions under skills/<name>/SKILL.md. A small Bun script copies each workflow's required references into its references/ directory. Commit those generated references so Git-based installation needs no build step. CI checks freshness by direct comparison; add no custom hashing mechanism.</p>
+<p>Every installed skill contains its required local references, migration information, and assets. Local links cannot reach outside that skill folder. Do not assume this source repository or another skill is installed. External tools and skills come from official sources with explicit installation and verification steps. Use the Vercel CLI rather than building a dependency resolver or installer.</p>
+<p>Validate discovery and individual installation with the Vercel CLI. Test isolated copy-style installs with the source repository unavailable. Check that development-installed upstream skills do not accidentally enter this repo's public discovery results; resolve collisions before publication.</p>
+<p>Add a README with installation commands, catalog, maintenance, and contribution guidance, plus upstream attribution. Recheck the existing empty remote before initializing Git and connecting it. Preserve existing local skills and their lockfile. Remote publication is separate from this plan review.</p>
+<h2 id="4-questionnaire-and-execution">4. Questionnaire and execution</h2>
+<p>Inspect → ask unresolved decisions → record project standards → review plan → apply → verify → record successful state.</p>
+<p>Inspect existing tooling, package manager, apps, CI, agents, installed skills, and recorded decisions. Explain relevant options and recommendations. Ask in rounds with no dependency on unanswered questions in the same round. Reuse decisions unless requirements changed.</p>
+<p>Cover purpose; clients; architecture and deployment boundaries; runtime/package manager; frameworks and APIs; contexts/features; lint/format rules; tests; authentication; observability; secrets; accessibility; database migration/recovery; agents; skills/MCP; local services; CI; registry; and deployment. Only activate relevant branches.</p>
+<p>Use grill-with-docs behavior: record agreed domain terms promptly; create ADRs only for consequential trade-offs. Use Matt Pocock's setup skill for issue-tracker and domain-document configuration instead of copying that questionnaire. Preserve the mandatory root letter when integrating upstream output.</p>
+<p>Yi's default review is canonical Markdown plus self-contained HTML in Plannotator. Other users may choose in-chat review. Record the choice. This repository requires .codex/plans/<date>-<slug>/ and an explicit approved structured result before implementation. Changes requested require revision and another review; approval notes guide implementation.</p>
+<h2 id="5-personal-baseline">5. Personal baseline</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Default and project decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Runtime</td>
+<td>Explain Node.js and Bun; user chooses. Latest Node LTS or stable Bun unless overridden. Update the project runtime before scaffolding/dependency installation, after inspection and review. Report existing incompatibilities with a proposed resolution first. Avoid changing unrelated projects' runtime.</td>
+</tr>
+<tr>
+<td>Package manager</td>
+<td>Explain pnpm and Bun separately from runtime; preserve existing choices unless migration is agreed. This repo uses Bun.</td>
+</tr>
+<tr>
+<td>Frontend</td>
+<td>TanStack Start or Next.js; relevant TanStack tools, shadcn/ui, ReUI, and Emil Kowalski skills. Select packages by need.</td>
+</tr>
+<tr>
+<td>API/data</td>
+<td>Ask about clients and shared backend. Hono where appropriate, optional oRPC, Zod, Drizzle/PostgreSQL when needed. MVC is not required.</td>
+</tr>
+<tr>
+<td>Lint/format</td>
+<td>Oxlint and Oxfmt. Perfectionist natural sorting directly through Oxlint's JS plugin support. No ESLint runner. Other rules depend on the project.</td>
+</tr>
+<tr>
+<td>Verification</td>
+<td>Format, lint, type checks, meaningful tests, production build. Vitest; Storybook for reusable UI; browser checks for critical journeys.</td>
+</tr>
+<tr>
+<td>Monorepos</td>
+<td>Package-manager workspaces and Turborepo when multiple apps/shared packages warrant them; shared configs/.</td>
+</tr>
+<tr>
+<td>Guidance</td>
+<td>Ask which agents are used, including multiple selections. Mandatory root AGENTS.md in letter format; local guidance only for distinct requirements.</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>Per-repo. Matt Pocock engineering skills and setup skill by default; offer other groups. Conditional stack-specific additions.</td>
+</tr>
+<tr>
+<td>Integrations</td>
+<td>Codegraph and Plannotator by default. Verify stack MCPs and skills from official current sources; Drizzle RC4 is an example, not a permanent version pin.</td>
+</tr>
+<tr>
+<td>Local dev</td>
+<td>Dockerfile and application image build; Compose services such as PostgreSQL/Mailpit only where needed.</td>
+</tr>
+<tr>
+<td>Delivery</td>
+<td>Ask; GitHub Actions prepared by default. Ask registry; Yi uses Harbor. Actual deployment is a user choice; Yi uses Kubernetes/Argo CD with a separate GitOps repo.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-context-based-structure-and-shared-configs">6. Context-based structure and shared configs</h2>
+<pre><code class="language-text">AGENTS.md
+CONTEXT.md
+standards/                 # maintained baseline and migration references
+skills/
+  setup-repo/
+    SKILL.md
+    references/            # packaged reference subset
+  adopt-standards/
+  upgrade-standards/
+  migrate-to-monorepo/
+  install-project-skills/
+  update-project-skills/
+  update-dependencies/
+scripts/                   # small packaging/validation helpers
+configs/
+  typescript/
+  oxlint/
+  oxfmt/
+apps/
+  web/                     # after all seven skills pass verification
+    src/
+      contexts/
+        catalog/
+          features/
+            browse-skills/
+            skill-details/
+        standards/
+          features/
+            read-standard/
+packages/                  # only for real shared consumers
+docs/
+  adr/
+.codex/plans/
+</code></pre>
+<p>Apps/packages define workspace boundaries. Contexts group domain responsibilities. Named feature folders co-locate related code and tests. Add internal directories only when useful; no empty feature template. Keep framework routing entry points where required. A context does not automatically become a package.</p>
+<p>Shared TypeScript, Oxlint, and Oxfmt defaults use each tool's supported extension mechanism. Apps/packages retain small framework-specific settings. Verify relative paths and inheritance from root and app-local commands; do not assume every tool supports TypeScript-style extends.</p>
+<p>Root guidance preserves Yi's working rules: readable low-complexity code, narrow scope, read-only questions, meaningful verification, careful Git boundaries, review gates, and proportional delegation. Local letters add distinct skill-authoring or app rules without repeating root instructions. Domain glossaries follow actual contexts; a monorepo alone does not require multiple domain glossaries.</p>
+<h2 id="7-upstream-skills-codegraph-and-plannotator">7. Upstream skills, Codegraph, and Plannotator</h2>
+<p>Install Matt Pocock engineering skills from mattpocock/skills and invoke setup-matt-pocock-skills. Resolve current catalog names rather than treating a category as an installer selector. Frontend projects use emilkowalski/skills; verified examples include emil-design-eng, animate, review-animations, improve-animations, find-animation-opportunities, and animation-vocabulary. Reference upstream ownership on the website rather than maintaining copies.</p>
+<p>Codegraph: verify official @colbymchenry/codegraph installation, initialize after source exists, ignore generated index data in Git, configure supported MCP integration for chosen agents, and verify an index/query. Preserve existing agent settings and report unsupported integrations.</p>
+<p>Plannotator: inspect the current installation, install from official instructions if absent, configure supported selected-agent integrations, and verify CLI operation and structured HTML review decisions. Bundle review-generation and result-handling guidance so another user does not depend on Yi's globally installed html-plan skill. Explain any required user-level tool configuration separately from per-repo skills. Avoid overwriting existing settings or installing duplicate hooks.</p>
+<h2 id="8-version-tracking-and-migration-paths">8. Version tracking and migration paths</h2>
+<p>Propose a small JSON record at .project-standards.json. Fields: schemaVersion, baselineVersion, project choices, applied versions per area, and lastRun containing skill name/version, target, areas, status, checks, and unresolved items. No credentials. Git provides history; no custom event store.</p>
+<p>Track structure, tooling, verification, agents, and delivery separately. Successful area versions advance only when required checks pass. Partial work preserves existing successful state. A Drizzle update with failing database tests remains incomplete. Validate schema versions and preserve unknown/newer data rather than silently rewriting it.</p>
+<p>Compare recorded state and actual files with the bundled baseline. Prefer direct migration to latest. Review intervening changes for prerequisites and use intermediate steps only when required. Preserve project choices and exceptions. Bundle supported migration guidance; first release starts the history without claiming untested historical paths. Unknown versions or missing history require inspection and a proposal.</p>
+<h2 id="9-existing-repos-and-maintenance">9. Existing repos and maintenance</h2>
+<p>Adoption: establish current behavior, agree the scope, and migrate without replacing architecture by default. Preserve unrelated edits. Report messy Git history/conflicts rather than creating a worktree to force resolution. Live changes remain separately authorized.</p>
+<p>Monorepo conversion: move the existing app first; update imports, workspace dependencies, scripts, shared configs, tests, Docker contexts, and CI paths. Verify it before using setup to add apps. Introduce context/feature layout as agreed and extract packages only for actual consumers.</p>
+<p>Dependency updates: inspect the workspace graph and constraints, consult official documentation/migration guides for every major update, group coupled packages, update the right lockfile, and check impacted dependents. Propose deprecated replacements explicitly. Report runtime incompatibility before changes; avoid unrelated bulk upgrades inside narrow fixes.</p>
+<p>Skill updates: automatically update untouched skills during setup/migration and maintenance. Detect edits against the recorded upstream content using existing metadata or direct comparison; preserve edited copies and report reconciliation needs. Updating skills never silently adopts a new project baseline.</p>
+<h2 id="10-ci-docker-and-deployment-ownership">10. CI, Docker, and deployment ownership</h2>
+<p>Prepare GitHub Actions quality/build checks by default. Ask whether to publish, which registry, and branch/tag policy. Configure Harbor from answers, referencing CI secrets rather than embedding credentials. Do not enable publishing without the required choices and authorization.</p>
+<p>Compose provides necessary local dependencies and documents environment/persistence behavior. Validate configuration and build the app image where a Docker engine is available. Report skipped execution accurately.</p>
+<p>Yi's application repo produces images; the separate GitOps repo controls deployment references. App commits alone do not edit Argo CD desired state. Ask about promotion before enabling a GitOps update. No infrastructure provisioning or live rollout is implied by CI preparation.</p>
+<h2 id="11-website-evaluation-after-all-skills">11. Website evaluation after all skills</h2>
+<p>Run setup-repo here with recorded choices: Bun, workspaces/Turborepo, TanStack Start in apps/web, shared configs, root letter, and integrations. Do not repeat settled questions.</p>
+<p>Build a static-content website with searchable catalog, skill details, copyable installation commands, baseline docs, and setup/migration guides. Generate content from published SKILL.md metadata and standards documents. Clearly label upstream references. Verify current TanStack Start prerender/static-output support; report a server requirement before changing the agreed hosting model.</p>
+<p>Suggested pages: home/catalog, skill detail, standards, workflow guides. Provide keyboard navigation, useful empty search results, readable code blocks, and responsive layout. No accounts, saved questionnaires, database, native app, or shared backend in the first evaluation. Do not add unused local services.</p>
+<p>Yi evaluates the result. The website proves this setup path, not every native/backend branch; use fixtures and later real projects for those.</p>
+<h2 id="12-implementation-order-and-verification">12. Implementation order and verification</h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Work</th>
+<th>Exit condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Foundation</td>
+<td>Baseline, root letter, metadata, portable packaging, state schema.</td>
+<td>References package independently; attempts and success are distinct.</td>
+</tr>
+<tr>
+<td>2. Compatibility</td>
+<td>Perfectionist via Oxlint, shared configs, CLI discovery/copy installs, Codegraph, Plannotator.</td>
+<td>Exact integrations verified or blockers reported; no ESLint fallback.</td>
+</tr>
+<tr>
+<td>3. All seven skills</td>
+<td>Entry points, conditional references, migration instructions, small useful scripts.</td>
+<td>Every skill independently usable and structurally valid.</td>
+</tr>
+<tr>
+<td>4. Behavior</td>
+<td>Isolated setup/adoption, partial upgrades, monorepo moves, edited skills, major updates.</td>
+<td>Outcome invariants hold; failures preserve accurate state.</td>
+</tr>
+<tr>
+<td>5. Website</td>
+<td>Run completed setup skill and build catalog/docs site.</td>
+<td>Content matches sources; UI/build checks pass; ready for Yi's review.</td>
+</tr>
+</tbody>
+</table>
+<p>Use Luna for bounded delegated work when useful and independent behavioral review. Keep simple tasks local; escalate only when needed.</p>
+<p>Test reference closure, generated-content freshness, actual installation/discovery, natural-sort diagnostics/fixes and formatter interaction, shared-config resolution, reruns, local-edit preservation, failed-check state, and affected app behavior. Test outcomes rather than wording. Keep fixtures isolated and preserve unrelated work. Final reporting separates local checks, remote CI, publication, and deployment.</p>
+<h2 id="13-risks-and-resolution-rules">13. Risks and resolution rules</h2>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Handling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Oxlint JS plugin bridge is alpha</td>
+<td>Verify selected Perfectionist rules; report incompatibility before proceeding. No ESLint runner fallback.</td>
+</tr>
+<tr>
+<td>Bundled references drift</td>
+<td>Generate from one source; enforce freshness.</td>
+</tr>
+<tr>
+<td>Upstream skills or agent integrations change</td>
+<td>Verify official instructions and selected-agent discovery; preserve settings and local edits.</td>
+</tr>
+<tr>
+<td>Migration partly fails</td>
+<td>Keep successful versions unchanged where checks fail; record remaining work.</td>
+</tr>
+<tr>
+<td>Config paths break after moves</td>
+<td>Test root/app commands, dependent workspaces, and production builds.</td>
+</tr>
+<tr>
+<td>TanStack Start output differs from hosting expectation</td>
+<td>Verify prerender/static support before deployment choices; retain the user's framework choice.</td>
+</tr>
+</tbody>
+</table>
+<p>No further product decision blocks review. Credentials, registry endpoints, target-agent selection, and live deployment details belong to the relevant setup run. Compatibility checks are implementation work with explicit failure behavior, not assumptions of support.</p>
+<h2 id="14-sources-and-evidence-limits">14. Sources and evidence limits</h2>
+<ul>
+<li><a href="https://github.com/vercel-labs/skills/blob/main/README.md#skill-discovery">Vercel discovery documentation</a> and <a href="https://github.com/vercel-labs/skills/blob/main/src/skills.ts">implementation</a>.</li>
+<li><a href="https://github.com/mattpocock/skills">Matt Pocock skills</a>.</li>
+<li><a href="https://github.com/emilkowalski/skills">Emil Kowalski skills</a>.</li>
+<li><a href="https://github.com/azat-io/eslint-plugin-perfectionist">Perfectionist</a> and <a href="https://oxc.rs/docs/guide/usage/linter/js-plugins.html">Oxlint JS plugins</a>.</li>
+<li>Codegraph distribution and CLI identity verified locally; current official installation instructions remain an implementation check.</li>
+<li>Local Plannotator help verifies annotate with --gate, --json, --require-approval, and --result-file; current agent integration instructions remain an implementation check.</li>
+</ul></main><script>document.getElementById('theme').onclick=()=>{const d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('theme',d?'dark':'light')}catch(e){}}</script></body></html>

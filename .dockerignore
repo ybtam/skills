@@ -1,0 +1,11 @@
+.git
+.agents
+.codex
+.codegraph
+node_modules
+**/node_modules
+**/dist
+**/.output
+**/.turbo
+.env
+.env.*

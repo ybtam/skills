@@ -1,0 +1,17 @@
+node_modules/
+.agents/
+.claude/
+.codegraph/
+.next/
+dist/
+.output/
+.tanstack/
+coverage/
+.env
+.env.*
+!.env.example
+.DS_Store
+
+.turbo/
+
+.playwright-cli/

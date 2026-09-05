@@ -1,0 +1,27 @@
+{
+  "name": "@ybtam/skills-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run content:generate && vite dev",
+    "build": "bun run content:generate && vite build",
+    "content:generate": "bun src/content/generate.ts",
+    "typecheck": "bun run content:generate && tsc --noEmit",
+    "lint": "oxlint --config ../../configs/oxlint/base.json src vite.config.ts",
+    "format:check": "oxfmt --check --config ../../configs/oxfmt/base.json --ignore-path ../../.formatterignore src vite.config.ts"
+  },
+  "dependencies": {
+    "@tanstack/react-router": "^1.170.32",
+    "@tanstack/react-start": "^1.168.49",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-markdown": "^10.1.0",
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "vite": "^8.2.2"
+  }
+}
