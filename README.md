@@ -49,3 +49,18 @@ docker compose up --build
 `configs/` holds the shared TypeScript, Oxlint, Oxfmt and static-server settings. Oxfmt uses `.formatterignore` from the root because config-local ignore patterns cannot reach outside their directory. Perfectionist natural import and named-import sorting runs in Oxlint; named-import suggestions require a separate `--fix-suggestions` pass after `--fix` when applying fixes.
 
 GitHub Actions is prepared for checks, static generation and image build. It does not publish an image or alter a GitOps repository. See [verification](docs/verification.md) for the checks performed and delivery limits.
+
+## GitHub Pages
+
+The Pages URL is [ybtam.github.io/skills](https://ybtam.github.io/skills/). The workflow validates both hosting variants on pushes and pull requests. Successful `main` runs deploy the Pages artifact; manual runs deploy only when run against `main`. Pull requests never deploy.
+
+```sh
+# Build for the repository's GitHub Pages URL:
+SITE_BASE_PATH=/skills/ bun run build
+# Build for Docker or another root-path host:
+bun run build
+```
+
+`SITE_BASE_PATH` must start and end with `/`. It controls assets, routing, document links and the 404 recovery link, and is part of the build cache key. The output stays in `apps/web/dist/client`; upload that directory itself rather than nesting it under another `skills/` folder. GitHub Pages serves its `404.html` for unknown paths.
+
+Pages must be configured with **GitHub Actions** as the repository's build source. The deployment uses the `github-pages` environment and the official upload/deploy actions. Docker remains an independent option; neither Pages deployment nor application commits change Harbor or a GitOps repository.

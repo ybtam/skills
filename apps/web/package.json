@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "bun run content:generate && vite dev",
-    "build": "bun run content:generate && vite build",
+    "build": "bun run content:generate && vite build && bun src/content/not-found.ts",
     "content:generate": "bun src/content/generate.ts",
     "typecheck": "bun run content:generate && tsc --noEmit",
     "lint": "oxlint --config ../../configs/oxlint/base.json src vite.config.ts",

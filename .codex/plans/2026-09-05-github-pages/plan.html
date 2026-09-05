@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GitHub Pages plan</title><script>try{document.documentElement.classList.toggle('dark',(localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'))==='dark')}catch(e){}</script><style>:root{--bg:#f7f8f4;--fg:#15211d;--line:#cdd5cc;--accent:#536822}html.dark{--bg:#15211d;--fg:#edf2e9;--line:#486052;--accent:#d5ee62}body{max-width:900px;margin:40px auto;padding:0 24px 60px;font:17px/1.7 system-ui;background:var(--bg);color:var(--fg)}h1{font-size:42px;line-height:1.2}h2{margin-top:36px;border-top:1px solid var(--line);padding-top:20px}a{color:var(--accent)}code{font-size:.9em}button{float:right;padding:9px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:6px;cursor:pointer}li{margin-bottom:10px}</style></head><body><button id="theme">Toggle theme</button><h1>GitHub Pages deployment</h1>
+<p>Add https://ybtam.github.io/skills/ as a second hosting option for the existing static website. Keep root-path Docker hosting working.</p>
+<h2>Scope</h2>
+<p>The repository is clean and its current website prerenders 14 pages. GitHub's Pages API returned 404: no Pages site is currently configured or visible to this account. Before enabling deployment, verify repository access and configure Pages to use GitHub Actions.</p>
+<p>This plan approves the code changes, local verification, commit and push, Pages configuration, first deployment, and live verification. No custom domain, Harbor publication, Traefik change, or GitOps change is included.</p>
+<h2>Implementation</h2>
+<ol>
+<li>Introduce one build-time deployment base, defaulting to <code>/</code>. For Pages use <code>/skills/</code>. Apply it consistently to Vite assets and TanStack routing using the installed version's supported configuration. Fix favicon, Markdown reference and standard-card URLs. Router links must receive the prefix once, not twice. Include the environment variable in Turborepo's build cache inputs.</li>
+<li>Preserve clean static output paths in the artifact: its root index serves the repository site's root, not an extra nested skills directory. Verify prerender output mapping rather than assuming framework behavior. Add a static UTF-8 404 page with a base-aware return-to-catalog link. Keep actual generated routes directly accessible and avoid a blanket SPA fallback that hides missing pages.</li>
+<li>Extend static-output checks to validate the selected deployment base, local asset and document targets, and the 404 page. Retain the current document-body and encoding regressions. Add focused tests for base-aware URL behavior where needed.</li>
+<li>Extend the GitHub Actions workflow so the existing checks and root-path/Docker build still run. Build and validate the Pages variant separately, upload only the static client output using the official Pages artifact action, and deploy only successful main-branch runs or an explicit manual main-branch run. Pull requests validate without deployment. Grant Pages write and OIDC permissions only to deployment and use the github-pages environment with deployment concurrency control.</li>
+<li>Document the two hosting paths. Configure Pages for Actions, commit and push the change, wait for the first deployment, and inspect the public URL.</li>
+</ol>
+<h2>Files and ownership</h2>
+<ul>
+<li><code>apps/web/vite.config.ts</code>, router and URL-producing components: deployment base and routing.</li>
+<li>A small website URL helper only if it avoids duplicated base handling.</li>
+<li>Static 404 generation and <code>scripts/check-site.ts</code>: output validation.</li>
+<li><code>turbo.json</code>: build environment/cache correctness.</li>
+<li><code>.github/workflows/check.yml</code>: checks, artifact upload and Pages deployment.</li>
+<li><code>README.md</code> and verification documentation: usage and actual results.</li>
+</ul>
+<p>No changes to the published skills or personal baseline are required for this hosting choice.</p>
+<h2>Verification</h2>
+<ul>
+<li>Run lint, formatting, type checks and tests.</li>
+<li>Build and inspect both <code>/</code> and <code>/skills/</code> variants with separate cache identities.</li>
+<li>Serve the Pages artifact mounted at <code>/skills/</code>; verify catalog, a directly loaded skill page, a full standards document, search, clipboard, favicon/assets and missing-route recovery. Confirm no hydration or browser console errors.</li>
+<li>Recheck the default Docker build after base-path changes.</li>
+<li>After publishing, verify Actions success and the real Pages URL, including a deep link. Report any GitHub permission or environment gate explicitly; never call a queued deployment complete.</li>
+</ul>
+<h2>Risks and handling</h2>
+<p>TanStack Start's router and asset bases can diverge or be applied twice. Validate rendered links and browser navigation, not just compilation. Base changes must invalidate cached builds. GitHub Pages may require repository permissions unavailable to this account; if configuration is blocked, finish and report the exact manual setting required. The default Docker path must remain <code>/</code>.</p><script>document.getElementById('theme').onclick=()=>{const dark=document.documentElement.classList.toggle('dark');try{localStorage.setItem('theme',dark?'dark':'light')}catch(e){}}</script></body></html>

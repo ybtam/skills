@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { standards, upstreamReferences } from "../content/generated";
 import { StandardCard } from "../contexts/standards/features/read-standard/StandardCard";
+import { withBase } from "../lib/site-path";
 
 export const Route = createFileRoute("/standards/")({ component: Standards });
 function Standards() {
@@ -24,7 +25,7 @@ function Standards() {
             key={standard.slug}
             title={standard.title}
             source={standard.source}
-            href={`/standards/${standard.slug}`}
+            href={withBase(`/standards/${standard.slug}`)}
           >
             {standard.body.replace(/^#.*\n/, "").slice(0, 260)}…
           </StandardCard>

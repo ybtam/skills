@@ -1,5 +1,6 @@
 import { createRootRoute, HeadContent, Link, Outlet, Scripts } from "@tanstack/react-router";
 
+import { withBase } from "../lib/site-path";
 import appStyles from "../styles.css?url";
 
 export const Route = createRootRoute({
@@ -12,7 +13,7 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: "stylesheet", href: appStyles },
-      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+      { rel: "icon", type: "image/svg+xml", href: withBase("/favicon.svg") },
     ],
   }),
   component: Root,

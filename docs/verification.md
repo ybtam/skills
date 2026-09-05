@@ -28,3 +28,9 @@ Shared Oxfmt ignore patterns are rooted at the config directory, so the root com
 Remote CI has not run. No commit, push, image publication, infrastructure change or deployment was performed. The empty GitHub remote is connected, but installation from GitHub requires publishing these files first.
 
 The website verifies the Bun/TanStack Start path. Other frameworks, native clients and real database upgrades remain conditional skill workflows rather than claims of live end-to-end validation. Failed-state behavior was reviewed against the instructions; no real database migration was executed. Other agents must be configured when selected; this run used the existing Codex environment.
+
+## GitHub Pages follow-up
+
+The approved Pages change adds a `/skills/` deployment variant while retaining `/` for Docker. Local verification passed for both variants: 17 tests, type/lint/format checks, all 14 pages plus the 404 page, base-aware asset/document targets, deep-link browser navigation, search, clipboard, favicon and 404 recovery. The root-path Docker image also builds successfully.
+
+The workflow validates both variants and deploys only successful main-branch runs. The public deployment status is available in the repository's GitHub Actions history. No Harbor or GitOps configuration is changed.
