@@ -25,6 +25,8 @@ Record agreed domain language in CONTEXT.md, or follow an existing CONTEXT-MAP.m
 
 ## Plan review
 
+Use the best model available in the host to generate every plan artifact.
+
 Yi's default is Plannotator; another user may choose in-chat approval. Save the chosen method in project choices. For Plannotator, prepare canonical `plan.md` and an equivalent self-contained `plan.html` under `.codex/plans/<date>-<slug>/`. Include scope, steps, affected boundaries, verification, risks, and open decisions. HTML needs responsive layout, accessible contrast, dark mode and a persistent theme switch; no external assets. Generate from the Markdown rather than maintaining divergent plans.
 
 Run `plannotator annotate <plan.html> --gate --json --require-approval --result-file <review.json>`. Give the user the actual session URL if the browser is not visible. Wait for the decision. `approved` allows the agreed work; carry notes into implementation. Changes requested mean revise Markdown/HTML and repeat review. Closing without approval is not approval. Read the structured result even when the command exits nonzero. For in-chat review, obtain explicit approval of the concrete plan.

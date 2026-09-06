@@ -4,6 +4,8 @@ Use these defaults to recommend project standards, not to override answers or ex
 
 ## Tool choices
 
+Use the best model available in the host to author or revise every `AGENTS.md`, including root and local letters.
+
 Explain Node.js and Bun as runtimes separately from pnpm and Bun package management. The user chooses. Default to current Node LTS or stable Bun; honor a release override. Inspect compatibility first, then select/install the project runtime before scaffolding or dependency installation. Use project-scoped version management and record exact versions. Report an existing repo's incompatibility with a proposed resolution before changing it; preserve other projects' runtimes.
 
 Offer TanStack Start or Next.js for web apps. Select relevant TanStack packages, shadcn/ui and ReUI by actual need. Multiple apps may share one backend; this is not an MVC requirement. Offer Hono for a separately deployed API, optional oRPC for its contract, Zod for validation, and Drizzle/PostgreSQL for persistence. Native and non-TypeScript projects need their own documented tool choices rather than a forced TypeScript scaffold.

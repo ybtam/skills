@@ -7,6 +7,8 @@ metadata:
 
 # Upgrade standards
 
+Use the best model available in the host to generate every plan artifact.
+
 Use this skill when a repository has recorded standards and selected tooling needs to advance.
 
 1. Inspect actual files and `.project-standards.json`, then compare them with the current bundled baseline. Read [references/state.md](references/state.md) for version semantics and preservation of unknown or newer records. Identify drift, exceptions, prerequisites, and areas already ahead.

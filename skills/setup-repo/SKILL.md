@@ -7,6 +7,8 @@ metadata:
 
 # Set up a repository
 
+Use the best model available in the host to generate every plan artifact.
+
 Use this skill for evidence-led standards setup in a single application, multiple frontends, shared backends, or another repository shape.
 
 1. Inspect the repository before asking questions: runtime and package manager, applications and packages, frameworks and APIs, scripts, tests, CI, Docker, agent guidance, installed skills, integrations, and recorded decisions. Preserve local edits and working choices unless a project decision changes them.

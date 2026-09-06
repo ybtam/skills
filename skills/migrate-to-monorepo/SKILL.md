@@ -7,6 +7,8 @@ metadata:
 
 # Migrate to a monorepo
 
+Use the best model available in the host to generate every plan artifact.
+
 Use this skill when an existing repository needs workspace boundaries for multiple applications or real shared packages. Inspect and verify the existing application before adding new applications.
 
 1. Inspect the current application, runtime, package manager, scripts, imports, dependency graph, configs, tests, Docker contexts, CI paths, agent guidance, and working tree. Preserve local edits and record the current behavior that must survive.

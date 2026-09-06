@@ -14,7 +14,7 @@ Use the repository scripts for checks and report what actually passed. Tests sho
 
 For substantive new setup or migration plans, write Markdown and self-contained HTML under `.codex/plans/`, open the HTML in Plannotator with a structured approval gate, and wait for approval. Existing approval applies to the agreed scope. Keep local verification, remote CI, publishing, and live deployment distinct.
 
-Use Luna for bounded day-to-day delegation when it earns its cost. Keep single-pass work local and escalate hard problems only when needed. Review the outcome against the specification and then for code quality.
+Use the best model available in the host for any `AGENTS.md` authoring or revision and for plan generation. Use Luna for bounded day-to-day delegation when it earns its cost. Keep single-pass work local and escalate hard problems only when needed. Review the outcome against the specification and then for code quality.
 
 Thank you for making this understandable to the next person.
 

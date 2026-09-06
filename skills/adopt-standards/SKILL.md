@@ -7,6 +7,8 @@ metadata:
 
 # Adopt standards
 
+Use the best model available in the host to generate every plan artifact.
+
 Use this skill when an existing repository has standards to adopt. Adoption migrates observed behavior and preserves the project architecture unless the approved scope says otherwise.
 
 1. Inspect current behavior boundaries: runtime, package manager, applications, dependencies, scripts, CI, tests, agent guidance, installed skills, integrations, and `.project-standards.json` when present. Check the working tree and preserve unrelated edits.

@@ -7,6 +7,8 @@ metadata:
 
 # Update dependencies
 
+Use the best model available in the host to generate every plan artifact.
+
 Use this skill when dependency versions need maintenance in a single project or monorepo.
 
 1. Inspect runtime, package manager, lockfiles, workspace graph, constraints, direct and transitive dependents, scripts, CI, and working tree. Preserve local edits. Read [references/state.md](references/state.md) for recording partial success and [references/migrations.md](references/migrations.md) for grouping, rollback, and failure rules.

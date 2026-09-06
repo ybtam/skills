@@ -2,6 +2,8 @@
 
 Dear agent,
 
+Use the best model available in the host for any `AGENTS.md` authoring or revision and for plan generation.
+
 Write each skill for someone who installs only that folder. Link bundled references with a clear reason to read them. Use the exact official upstream source when installing prerequisites; do not assume another skill is already present.
 
 Keep workflow instructions here and baseline decisions in `standards/`. Run the packaging script after editing the source references. The generated `references/` copies are committed so installation from Git requires no build.

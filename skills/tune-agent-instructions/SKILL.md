@@ -7,6 +7,8 @@ metadata:
 
 # Tune agent instructions
 
+Use the best model available in the host for any authorized `AGENTS.md` authoring or revision.
+
 Use this workflow when the user wants to improve agent guidance or investigate instruction-related behavior. Default to a read-only audit. An explanation or audit request does not authorize edits.
 
 ## Inspect the intended behavior
