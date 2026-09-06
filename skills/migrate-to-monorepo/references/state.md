@@ -1,5 +1,31 @@
 # Applied standards and attempts
 
+## Release record
+
+`areas.release.status` records the release decision/configuration state, not the generic run state. For `declined` or `deferred`, preserve an existing `areas.release.version` or omit it when none exists; do not record a new successful baseline version.
+
+Record release setup in the relevant area of `.project-standards.json`; do not treat the installed skill version as an applied baseline version. Use a small record such as:
+
+```json
+{
+  "areas": {
+    "release": {
+      "version": "0.2.0",
+      "status": "configured",
+      "checks": ["Changesets workflow verified"],
+      "settings": {
+        "topology": "single-root",
+        "outcome": ["version-pr", "github-release"],
+        "releaseOwner": "changesets",
+        "registryPublication": "not-configured"
+      }
+    }
+  }
+}
+```
+
+`status` is one of `configured`, `declined`, `deferred` or `partial`. Record the applied baseline version separately from `skillVersion`. A declined or deferred answer updates only `areas.release` in the target `.project-standards.json`; it leaves package manifests, `.changeset`, workflows, credentials, registry, publishing and production configuration untouched. A partial attempt records completed checks and unresolved decisions, preserves prior successful state, and supports recovery without resetting unrelated work. Missing registry, package, access or authentication fields set `registryPublication` to `not-configured`, even when versioning or GitHub Releases are configured.
+
 Use `.project-standards.json` in the target repo, separate from the installed skill's baseline. This is a small record, not a migration database. Git preserves history. Store no credentials. Preserve existing choices, unknown fields and successful area versions. If schemaVersion is newer than supported, inspect and report before rewriting.
 
 When installing upstream skills, an optional `installedSkills` map records each skill's repository, immutable revision, and source path. Preserve existing provenance. See [integrations.md](integrations.md) for revision verification; installer content hashes alone are not revision provenance.

@@ -1,5 +1,15 @@
 # Migration rules and supported history
 
+## Baseline 0.1.0 → 0.2.0
+
+Do not install or initialize the CLI or create workflows until the ordered owner interview is complete and the target plan is approved. Use the target's existing test runner when available; otherwise use the narrow `node --test` workflow-shape fallback to verify local static workflow shape and configuration. Remote GitHub Actions CI is not run by this migration and must be reported separately as unrun or pending.
+
+The Python private `package.json` sidecar does not use or create a Python adapter. Do not edit `pyproject.toml`, synchronize Python metadata or claim PyPI support.
+
+Inspect the target repository, its state record, workspace layout and existing workflows. Review the owner choices for release setup; do not roll Changesets out automatically to existing projects. If the owner declines or defers, update only the target `.project-standards.json` release record and leave package manifests, `.changeset`, workflows, credentials, registry, publishing and production configuration untouched. If the owner approves, complete the owner interview and approve the target plan before installing or initializing `@changesets/cli` or creating workflows; follow [integrations.md](integrations.md) if the approval gate is unclear. Choose the requested root or monorepo topology and release outcome, and add only the approved GitHub Actions workflows. Python projects may receive a private `package.json` sidecar, but this route never changes Python metadata or PyPI behavior.
+
+Verify the selected Changesets configuration, workflow triggers, permissions, release owner, branch, release notes and any publication fields with the target's existing test runner when available; otherwise use a narrow `node --test` fallback. This verifies local static workflow shape and configuration only. Remote GitHub Actions CI is not run by this migration and must be reported separately as unrun or pending. Verify registry publication only when registry, package, access and authentication are all present. Record `configured`, `declined`, `deferred` or `partial` in [state.md](state.md), with applied baseline `0.2.0` separate from skill metadata. On a failed check, preserve the last successful area version, retain reviewable partial edits, and report exact recovery steps; do not reset unrelated work or claim production deployment.
+
 Baseline 0.1.0 is the first release. There are no earlier released baseline migrations. Existing untracked projects use adoption after inspection. Do not invent intermediate version history. Future changes must add source/target versions, prerequisites, affected areas, transformations, verification and recovery notes here before claiming support.
 
 ## Standards upgrades

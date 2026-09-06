@@ -12,6 +12,7 @@ const baselineNames = [
   "install-project-skills",
   "update-project-skills",
   "update-dependencies",
+  "release-with-changesets",
 ];
 
 export const names = [...baselineNames, "tune-agent-instructions"];

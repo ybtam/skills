@@ -11,6 +11,8 @@ npx skills@latest add ybtam/skills --skill setup-repo
 
 Select your agents and keep project scope. The repository must be published before the GitHub commands can install this implementation. For a local checkout, replace `ybtam/skills` with its absolute path.
 
+The catalog contains nine skills: eight baseline skills and the specialized `tune-agent-instructions` audit skill.
+
 | Skill                   | Use it for                                                                 |
 | ----------------------- | -------------------------------------------------------------------------- |
 | setup-repo              | A new project and agreed tooling, guidance and local workflow              |
@@ -20,6 +22,7 @@ Select your agents and keep project scope. The repository must be published befo
 | install-project-skills  | Selecting and installing skills for your agents                            |
 | update-project-skills   | Automatic upstream updates that preserve local edits                       |
 | update-dependencies     | Dependency updates with documented major-version migrations                |
+| release-with-changesets | Target-repository Changesets release setup and GitHub Actions release CI   |
 | tune-agent-instructions | Auditing and improving agent guidance while preserving explicit boundaries |
 
 ## Tune agent guidance
@@ -46,7 +49,7 @@ Setup uses [Matt Pocock's engineering skills and setup workflow](https://github.
 
 ## Website and local container
 
-All seven skills were implemented and checked before the website setup. The TanStack Start app prerenders the catalog and full standard documents from repository sources.
+The original seven baseline skills were implemented and checked before the website setup. The current collection has eight baseline skills plus the specialized `tune-agent-instructions` skill (nine skills total). The TanStack Start app prerenders the catalog and full standard documents from repository sources.
 
 ```sh
 bun run dev

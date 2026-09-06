@@ -1,0 +1,28 @@
+{
+  "lockfileVersion": 2,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "@fixture/js-monorepo",
+    },
+    "apps/private-app": {
+      "name": "@fixture/private-app",
+      "version": "1.0.0",
+    },
+    "apps/unselected-private-app": {
+      "name": "@fixture/unselected-private-app",
+      "version": "1.0.0",
+    },
+    "packages/public-library": {
+      "name": "@fixture/public-library",
+      "version": "1.0.0",
+    },
+  },
+  "packages": {
+    "@fixture/private-app": ["@fixture/private-app@workspace:apps/private-app"],
+
+    "@fixture/public-library": ["@fixture/public-library@workspace:packages/public-library"],
+
+    "@fixture/unselected-private-app": ["@fixture/unselected-private-app@workspace:apps/unselected-private-app"],
+  }
+}

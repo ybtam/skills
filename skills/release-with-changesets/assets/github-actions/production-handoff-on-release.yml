@@ -1,0 +1,25 @@
+# Optional repository-owned production handoff. Keep existing protections.
+# Choose one explicit prerelease policy:
+# - stable only: github.event.release.prerelease == false
+# - selected prerelease production: an approved target guard that includes
+#   github.event.release.prerelease == true and the target's own protection.
+name: Target production handoff on published release
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: read
+
+jobs:
+  production-handoff:
+    if: >-
+      __TARGET_EXISTING_PRODUCTION_GUARD__ &&
+      (__TARGET_EXPLICIT_PRERELEASE_PRODUCTION_GUARD__)
+    runs-on: __TARGET_RUNNER__
+    steps:
+      - uses: __TARGET_CHECKOUT_ACTION__@__TARGET_CHECKOUT_ACTION_REF__
+      - name: Run reviewed production handoff
+        run: __TARGET_REVIEWED_PRODUCTION_HANDOFF_COMMAND__

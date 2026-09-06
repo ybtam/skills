@@ -1,4 +1,4 @@
-# Personal baseline · 0.1.0
+# Personal baseline · 0.2.0
 
 Use these defaults to recommend project standards, not to override answers or existing constraints. Read [questionnaire.md](questionnaire.md) for the decision process, [integrations.md](integrations.md) for external tools, [state.md](state.md) for recording success, and [migrations.md](migrations.md) for changes to existing work.
 
@@ -27,3 +27,11 @@ Install skills per repo for the selected agents. Default to Matt Pocock engineer
 Prepare Dockerfile/image build and Compose services the project actually needs, such as PostgreSQL/Mailpit. Ask about CI, with GitHub Actions prepared by default; retain existing CI unless replacement is agreed. Ask about image publishing, registry, and triggers. Yi prefers Harbor, Kubernetes and Argo CD with deployment configuration in a separate GitOps repo. App commits alone do not update deployment desired state. CI preparation does not authorize publishing, provisioning, or rollout. Reference secrets rather than storing credentials.
 
 Ask conditional questions about authentication, observability, secrets, accessibility, database migration/recovery and end-to-end testing. Do not install unused services merely because they are in the baseline.
+
+## Release with Changesets
+
+Inspect the repository, then ask whether the owner intends to set up release automation. Until the answer is yes, do not install release dependencies, make release-coordination `package.json` mutations, initialize Changesets, change release workflows or credentials, publish, or deploy. A decline or deferral makes no release-configuration changes and records only the decision in `areas.release` of the target `.project-standards.json`; unrelated approved setup or migration work may continue.
+
+After yes, complete the ordered owner interview and approve the target plan before any release mutation. Use GitHub Actions and Changesets for the approved scope. Ask the owner to select a root release or monorepo units, with optional named `fixed`, `linked`, `ignore` and private-unit behavior. Use one release owner per release path. Do not infer release units or create a generic deployment map.
+
+The Python private `package.json` sidecar does not use or create a Python adapter; do not edit `pyproject.toml`, synchronize Python metadata, or claim PyPI support. Ask for the publication outcome, including registry, selected package(s), access level, and the exact target-owned publish command. Without registry, selected package, access level, authentication, or command, registry publication remains unconfigured; version PR and GitHub Release paths can still be selected. Ask for the channel, separate prerelease GitHub Release and registry-publication behavior, release-notes source, existing workflow authentication and confirmed release branch. Production is optional, target-owned, and trusts the selected Changesets release event with existing protections; prerelease production needs an explicit approved guard.

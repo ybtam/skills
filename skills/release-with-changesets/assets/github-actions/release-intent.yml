@@ -1,0 +1,33 @@
+# release-with-changesets: intent-validation
+# Copy after the owner approves the target plan. Replace every __TARGET_*__ value.
+# Keep this workflow scoped to selected release paths. Its job condition may exempt
+# only the generated Changesets version PR and explicit owner-approved exceptions.
+# The target repository policy must govern any owner-approved exception label.
+name: Target release intent
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    branches:
+      - __TARGET_CONFIRMED_RELEASE_BRANCH__
+    paths:
+      - .changeset/**
+      # Replace with one or more owner-selected release paths.
+      - __TARGET_SELECTED_RELEASE_PATH__
+
+jobs:
+  release-intent:
+    # This expression must run validation except for the generated version PR or
+    # an owner-approved exception. Do not turn it into a broad actor/path bypass.
+    if: ${{ __TARGET_RUN_RELEASE_INTENT_VALIDATION__ }}
+    runs-on: __TARGET_RUNNER__
+    steps:
+      - uses: __TARGET_CHECKOUT_ACTION__@__TARGET_CHECKOUT_ACTION_REF__
+        with:
+          persist-credentials: false
+      - name: Prepare target release validation
+        run: __TARGET_SETUP_AND_INSTALL_COMMAND__
+      - name: Validate release intent for selected units
+        run: __TARGET_VALIDATE_CHANGESETS_INTENT_COMMAND__

@@ -1,5 +1,17 @@
 # Official integrations
 
+## Changesets
+
+The canonical mutation gate is a completed ordered owner interview and an approved target plan; generic approval is not sufficient. Use one release owner per release path.
+
+Do not install, initialize or change workflows until the owner interview is complete and the target plan is approved. Generic owner approval is not sufficient.
+
+Before initialization or workflow changes, verify `@changesets/cli` with the target repository's existing package manager. Use that package manager for installation and Changesets commands; report an incompatibility before changing the repository.
+
+Use the official [`changesets/action`](https://github.com/changesets/action) and `@changesets/cli` documentation. After the completed owner interview and approved target plan, install the CLI in the target repository, initialize it, and add only the selected GitHub Actions workflows. Inspect existing workflows and authentication first; preserve them unless replacement is agreed. Let Changesets select versions from its configured package descriptors. Do not add a deployment map or infer which apps release.
+
+Choose one release owner per release path: the native Changesets action, or one repository-owned script that consumes Changesets versions and is safe to rerun without duplicate releases. Configure stable or prerelease behavior, release notes and the confirmed release branch from owner answers. A production workflow is separate and optional, triggered by the selected Changesets release event, with target-owned protections. Registry publication requires explicit registry, package selection, access and authentication answers; otherwise leave the publish job unconfigured.
+
 Ask which agents the user uses and inspect current configuration. Skills are project-scoped; binaries and some agent settings may be user-scoped. Explain that distinction and preserve existing settings. Verify commands against current official help before execution. Avoid broad installers that configure agents the user did not select.
 
 ## Skills CLI and upstream collections

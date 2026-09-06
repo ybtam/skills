@@ -1,0 +1,42 @@
+{
+  "intent": {
+    "workflow": ".github/workflows/__TARGET_INTENT_WORKFLOW_FILE__",
+    "job": "__TARGET_INTENT_JOB__",
+    "branch": "__TARGET_INTENT_BRANCH__",
+    "paths": ["__TARGET_SELECTED_RELEASE_PATH__"],
+    "exemptionPredicates": [
+      "__TARGET_EXEMPTION_PREDICATE_ONE__",
+      "__TARGET_EXEMPTION_PREDICATE_TWO__"
+    ],
+    "validationRun": "__TARGET_VALIDATE_CHANGESETS_INTENT_COMMAND__"
+  },
+  "release": {
+    "workflow": ".github/workflows/__TARGET_RELEASE_WORKFLOW_FILE__",
+    "job": "__TARGET_RELEASE_OWNER_JOB__",
+    "branch": "__TARGET_CONFIRMED_RELEASE_BRANCH__",
+    "concurrencyScope": "workflow",
+    "concurrencyGroup": "__TARGET_RELEASE_CONCURRENCY_GROUP__",
+    "owner": {
+      "native": {
+        "action": "__TARGET_EXACT_CHANGESETS_ACTION__",
+        "version": "__TARGET_CHANGESETS_VERSION_COMMAND__",
+        "publish": null,
+        "permissions": {
+          "contents": "write",
+          "pull-requests": "write"
+        }
+      }
+    }
+  },
+  "manual": {
+    "job": "__TARGET_MANUAL_DRY_RUN_JOB__",
+    "input": "__TARGET_MANUAL_CONFIRMATION_INPUT__",
+    "value": "__TARGET_MANUAL_CONFIRMATION_VALUE__",
+    "run": "__TARGET_MANUAL_DRY_RUN_COMMAND__"
+  },
+  "production": {
+    "workflow": ".github/workflows/__TARGET_PRODUCTION_HANDOFF_FILE__",
+    "job": "__TARGET_PRODUCTION_HANDOFF_JOB__",
+    "prereleaseGuard": "github.event.release.prerelease == false"
+  }
+}

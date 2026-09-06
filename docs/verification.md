@@ -1,6 +1,6 @@
-# Implementation verification · 2026-09-05
+# Historical implementation verification · 2026-09-05
 
-The approved plan was implemented locally. All seven skills were completed and reviewed before the website evaluation.
+This historical record describes the seven-skill baseline at the time. The approved plan was implemented locally, and all seven skills were completed and reviewed before the website evaluation.
 
 ## Passed locally
 
@@ -37,6 +37,23 @@ The workflow validates both variants and deploys only successful main-branch run
 
 ## Agent-instruction audit skill
 
-`tune-agent-instructions` was added from the official GPT-6 Astra behavioral guidance. The new skill passed standalone copy installation and reference validation. The full suite passed 21 tests, and both hosting variants built 15 content pages plus the 404 page. Specialized references remain separate from the seven baseline-bundled workflows.
+`tune-agent-instructions` was added from the official GPT-6 Astra behavioral guidance. The new skill passed standalone copy installation and reference validation. The full suite passed 21 tests, and both hosting variants built 15 content pages plus the 404 page. At that time, specialized references remained separate from the seven baseline-bundled workflows.
 
 An independent Luna agent used the skill for a read-only fixture audit. It identified repeated permission requests, edits during explanation requests, mandatory delegation, and disproportionate testing while preserving the explicit review/deployment gates and worktree restriction. A direct before/after comparison confirmed the fixture was unchanged. This was an executed audit with reasoning-based scenario assessment, not an API-based Astra behavior benchmark.
+
+## Baseline amendment · 2026-09-06
+
+The `0.2.0` baseline amendment adds `release-with-changesets` as the eighth baseline skill. The catalog now has eight baseline skills plus the specialized `tune-agent-instructions` skill, for nine skills total. Its approved target-only release workflow is documented in the [release-with-changesets plan](../.codex/plans/2026-09-06-release-with-changesets-baseline/plan.md) and [review result](../.codex/plans/2026-09-06-release-with-changesets-baseline/review.json).
+
+### Passed locally
+
+- `@changesets/cli` 3.0.2 was installed as a development dependency for local fixtures.
+- `bun run skills:bundle` and `bun run skills:check` passed for all nine skills.
+- `bun run check` passed with 57 Vitest tests, including the 25-test Changesets CLI and workflow-contract suite.
+- `bun run build` passed; `check-site` validated 16 pages plus the 404 page, including `/skills/release-with-changesets/`.
+- Real isolated CLI fixtures passed for a single private package, selected JavaScript monorepo release units, Python-sidecar byte preservation, and workflow shapes.
+- Fixture `bun install --frozen-lockfile` passed.
+
+### Limits
+
+The collection remains GitHub-folder-distributed and has no root Changesets release setup. No remote CI, publishing, GitHub Release, tag, registry, or production action ran.

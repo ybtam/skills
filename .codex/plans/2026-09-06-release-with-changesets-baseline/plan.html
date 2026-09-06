@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Release with Changesets baseline skill — implementation plan</title>
+    <script>
+      (() => {
+        const saved = localStorage.getItem("release-plan-theme");
+        const dark = saved ? saved === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.classList.toggle("dark", dark);
+      })();
+    </script>
+    <style>
+      :root {
+        color-scheme: light;
+        --canvas: #f7f7f4;
+        --surface: #ffffff;
+        --surface-muted: #eff1ec;
+        --ink: #17211d;
+        --muted: #5c665f;
+        --line: #d7ddd5;
+        --accent: #056b52;
+        --accent-soft: #dff4e9;
+        --warning: #875d04;
+        --warning-soft: #fff0c9;
+        --risk: #9e3730;
+        --risk-soft: #fde8e6;
+        --code: #14241e;
+        --code-ink: #e8f5ee;
+        --shadow: 0 18px 52px rgba(28, 49, 39, 0.08);
+      }
+
+      html.dark {
+        color-scheme: dark;
+        --canvas: #101614;
+        --surface: #19231f;
+        --surface-muted: #24312b;
+        --ink: #edf6f0;
+        --muted: #b5c0b8;
+        --line: #3a4a41;
+        --accent: #75d5aa;
+        --accent-soft: #153f30;
+        --warning: #f0c66c;
+        --warning-soft: #4b390d;
+        --risk: #f39c96;
+        --risk-soft: #502623;
+        --code: #0e1512;
+        --code-ink: #e8f5ee;
+        --shadow: none;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--canvas);
+        color: var(--ink);
+        font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      a { color: var(--accent); }
+      a:focus-visible, button:focus-visible { outline: 3px solid var(--warning); outline-offset: 3px; }
+      code, pre, .eyebrow, .pill, .step-number, th { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      code { background: var(--surface-muted); border-radius: 4px; padding: 0.08rem 0.28rem; }
+      .shell { width: min(1160px, calc(100% - 32px)); margin: 0 auto; }
+      .topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 0; }
+      .brand { color: var(--muted); font-size: 14px; }
+      .theme-toggle { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 8px 12px; cursor: pointer; font: inherit; }
+      .hero { padding: 46px 0 28px; max-width: 880px; }
+      .eyebrow { color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+      h1, h2, h3 { line-height: 1.15; margin: 0; }
+      h1 { margin-top: 12px; font-size: clamp(2.5rem, 6vw, 4.9rem); letter-spacing: -0.055em; }
+      h2 { font-size: clamp(1.45rem, 3vw, 2.1rem); letter-spacing: -0.03em; }
+      h3 { font-size: 1.05rem; }
+      .lede { max-width: 750px; color: var(--muted); font-size: 1.13rem; margin: 24px 0; }
+      .gate { border-left: 5px solid var(--warning); background: var(--warning-soft); border-radius: 8px; padding: 16px 18px; color: var(--ink); }
+      .gate strong { color: var(--warning); }
+      .summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 32px 0 18px; }
+      .summary-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; box-shadow: var(--shadow); }
+      .summary-card b { display: block; font-size: 1.25rem; margin-top: 4px; }
+      .summary-card span { color: var(--muted); font-size: 13px; }
+      nav { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 0 28px; }
+      nav a { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 7px 12px; color: var(--ink); font-size: 13px; text-decoration: none; }
+      main { padding-bottom: 80px; }
+      section { margin: 54px 0; scroll-margin-top: 20px; }
+      .section-heading { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; }
+      .step-number { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: white; font-size: 13px; font-weight: 700; }
+      .surface { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: clamp(18px, 3vw, 30px); box-shadow: var(--shadow); }
+      .surface > :first-child { margin-top: 0; }
+      .surface > :last-child { margin-bottom: 0; }
+      .flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; align-items: stretch; }
+      .flow-card { background: var(--surface-muted); border: 1px solid var(--line); border-radius: 12px; padding: 16px; position: relative; }
+      .flow-card:not(:last-child)::after { content: "→"; position: absolute; right: -18px; top: 42%; color: var(--accent); font-size: 25px; z-index: 2; }
+      .flow-card b { display: block; margin-bottom: 6px; }
+      .flow-card small { color: var(--muted); }
+      .matrix { overflow-x: auto; }
+      table { width: 100%; min-width: 720px; border-collapse: collapse; }
+      th, td { text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); padding: 13px 10px; }
+      th { color: var(--muted); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
+      td:first-child { font-weight: 700; width: 28%; }
+      .milestones { display: grid; gap: 12px; }
+      .milestone { display: grid; grid-template-columns: 44px 1fr; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+      .milestone:last-child { border-bottom: 0; }
+      .milestone-index { display: grid; place-items: center; align-self: start; width: 32px; height: 32px; border-radius: 8px; background: var(--accent-soft); color: var(--accent); font: 700 13px ui-monospace, monospace; }
+      .milestone p { margin: 8px 0 0; color: var(--muted); }
+      .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+      .pill { border: 1px solid var(--line); background: var(--surface-muted); border-radius: 999px; padding: 3px 8px; color: var(--muted); font-size: 11px; }
+      .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+      .code { overflow-x: auto; background: var(--code); color: var(--code-ink); border-radius: 12px; padding: 18px; }
+      .code code { background: transparent; padding: 0; }
+      .risk-table { display: grid; grid-template-columns: 1.25fr 100px 1.75fr; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+      .risk-table > div { padding: 13px; border-bottom: 1px solid var(--line); }
+      .risk-table > div:nth-last-child(-n + 3) { border-bottom: 0; }
+      .risk-head { background: var(--surface-muted); color: var(--muted); font: 700 12px ui-monospace, monospace; text-transform: uppercase; }
+      .severity { display: inline-block; border-radius: 999px; padding: 3px 8px; font: 700 11px ui-monospace, monospace; }
+      .severity.high { background: var(--risk-soft); color: var(--risk); }
+      .severity.medium { background: var(--warning-soft); color: var(--warning); }
+      .severity.low { background: var(--accent-soft); color: var(--accent); }
+      .decision { border-left: 5px solid var(--accent); background: var(--accent-soft); border-radius: 8px; padding: 14px 16px; }
+      .non-goals { color: var(--muted); }
+      .checklist { display: grid; gap: 8px; padding: 0; list-style: none; }
+      .checklist li { padding-left: 29px; position: relative; }
+      .checklist li::before { content: "✓"; color: var(--accent); font-weight: 800; position: absolute; left: 0; }
+      footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; padding: 28px 0 56px; }
+      @media (max-width: 900px) {
+        .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .flow { grid-template-columns: 1fr; }
+        .flow-card:not(:last-child)::after { content: "↓"; right: auto; left: calc(50% - 7px); bottom: -27px; top: auto; }
+        .two-column { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 560px) {
+        .shell { width: min(100% - 22px, 1160px); }
+        .topbar { padding: 12px 0; }
+        .hero { padding-top: 30px; }
+        .summary { grid-template-columns: 1fr; }
+        .risk-table { grid-template-columns: 1fr; }
+        .risk-table > div { border-bottom: 1px solid var(--line) !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header>
+        <div class="topbar">
+          <span class="brand">ybtam/skills · implementation review</span>
+          <button class="theme-toggle" type="button" aria-label="Toggle dark mode">Toggle theme</button>
+        </div>
+        <div class="hero">
+          <p class="eyebrow">Baseline 0.2.0 · approval required</p>
+          <h1>Release with Changesets</h1>
+          <p class="lede">Add a portable release workflow skill that evaluates a repository first, asks its owner before any release setup, and configures only the GitHub Actions path they select.</p>
+          <div class="gate"><strong>Review gate:</strong> this page authorizes planning only. No Changesets install, workflow mutation, registry publication, GitHub Release, or production deployment starts until review approval.</div>
+        </div>
+        <div class="summary" aria-label="Plan summary">
+          <div class="summary-card"><span>Published skills after change</span><b>9</b></div>
+          <div class="summary-card"><span>Baseline skills after change</span><b>8</b></div>
+          <div class="summary-card"><span>Target CI provider</span><b>GitHub Actions</b></div>
+          <div class="summary-card"><span>Current repository release model</span><b>Unchanged</b></div>
+        </div>
+        <nav aria-label="Plan sections">
+          <a href="#contract">Contract</a>
+          <a href="#flow">Flow</a>
+          <a href="#milestones">Milestones</a>
+          <a href="#verification">Verification</a>
+          <a href="#risks">Risks</a>
+        </nav>
+      </header>
+
+      <main>
+        <section id="contract">
+          <div class="section-heading"><span class="step-number">01</span><h2>Agreed contract</h2></div>
+          <div class="surface matrix">
+            <table>
+              <thead><tr><th>Decision</th><th>Approved behavior</th></tr></thead>
+              <tbody>
+                <tr><td>Entry points</td><td><code>setup-repo</code>, <code>adopt-standards</code>, <code>upgrade-standards</code>, and <code>migrate-to-monorepo</code> inspect first, ask release intent, and conditionally invoke the new skill.</td></tr>
+                <tr><td>Setup order</td><td>Install and verify selected skills, then trigger <code>grill-with-docs</code>. Where the host requires explicit invocation, request it rather than claiming it ran. Every entrypoint retains a bundled fallback when a supporting skill is unavailable.</td></tr>
+                <tr><td>Release topology</td><td>The owner selects one repository release, independent packages/apps, named fixed/linked groups, and any explicitly ignored packages. Changesets selects only descriptor-backed, selected units.</td></tr>
+                <tr><td>Python</td><td>A private <code>package.json</code> sidecar coordinates release data only. The skill never edits <code>pyproject.toml</code>, synchronizes Python versions, or claims PyPI publication.</td></tr>
+                <tr><td>Publication</td><td>The owner selects version PR only, GitHub Release, or registry publication. Missing registry/access/auth answers leave publication unconfigured.</td></tr>
+                <tr><td>Release owner</td><td>Exactly one: native Changesets or one explicit, rerunnable repository release script. No duplicate tags or releases.</td></tr>
+                <tr><td>Production</td><td>Repository-owned and optional. Per ADR 0002, the baseline trusts the selected Changesets release event and adds no independent tag or commit validation.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="flow">
+          <div class="section-heading"><span class="step-number">02</span><h2>Target repository flow</h2></div>
+          <div class="flow" aria-label="Release setup flow">
+            <div class="flow-card"><b>Inspect</b><small>Read topology, package descriptors, CI, release owner, branch, registry, and deployment contract.</small></div>
+            <div class="flow-card"><b>Ask</b><small>The owner chooses release intent, topology, publication, channel, notes, authentication, and production behavior.</small></div>
+            <div class="flow-card"><b>Review</b><small>Write a target-scoped plan. A decline records deferred/not applicable state and changes nothing.</small></div>
+            <div class="flow-card"><b>Configure</b><small>Install/init Changesets and only selected GitHub Actions, scripts, and tests after approval.</small></div>
+            <div class="flow-card"><b>Verify</b><small>Validate release intent, one owner, workflow shape, and local behavior. Keep remote actions separate.</small></div>
+          </div>
+          <div class="decision" style="margin-top:18px"><strong>Descriptor rule:</strong> a simple repository uses its root descriptor; a Python-shaped simple repository gets a private root sidecar only after approval; a monorepo preserves existing descriptors and creates one only for an owner-selected release unit.</div>
+        </section>
+
+        <section id="milestones">
+          <div class="section-heading"><span class="step-number">03</span><h2>Implementation milestones</h2></div>
+          <div class="surface milestones">
+            <article class="milestone"><span class="milestone-index">1</span><div><h3>Baseline 0.2.0 source of truth</h3><p>Extend authoritative standards for conditional release setup, state recording, integrations, and the <code>0.1.0 → 0.2.0</code> migration. Keep the current context and ADR decisions authoritative.</p><div class="tags"><span class="pill">standards/*.md</span><span class="pill">CONTEXT.md</span><span class="pill">docs/adr</span></div></div></article>
+            <article class="milestone"><span class="milestone-index">2</span><div><h3>Portable release skill and assets</h3><p>Create an independently installable <code>release-with-changesets</code> skill with bundled references, workflow skeletons, and a fallback workflow-shape test. Templates use placeholders for target-owned data.</p><div class="tags"><span class="pill">skills/release-with-changesets/**</span><span class="pill">metadata 0.1.0</span></div></div></article>
+            <article class="milestone"><span class="milestone-index">3</span><div><h3>Conditional entrypoint orchestration</h3><p>Wire release evaluation into four baseline entrypoints. Put skill install/verify before triggering <code>grill-with-docs</code> in <code>setup-repo</code>; request explicit invocation when the host requires it, and preserve installed-alone fallbacks.</p><div class="tags"><span class="pill">setup-repo</span><span class="pill">adopt</span><span class="pill">upgrade</span><span class="pill">monorepo</span></div></div></article>
+            <article class="milestone"><span class="milestone-index">4</span><div><h3>Package, catalog, and baseline records</h3><p>Add the skill to baseline names, install the real CLI only as a development dependency, regenerate bundled references, and reconcile the catalog from eight to nine published skills without adding this repository’s own release setup.</p><div class="tags"><span class="pill">package.json</span><span class="pill">bun.lock</span><span class="pill">scripts/skills.ts</span><span class="pill">README</span></div></div></article>
+            <article class="milestone"><span class="milestone-index">5</span><div><h3>Fixture and workflow verification</h3><p>Exercise the real CLI against single-package, JavaScript-monorepo, and Python-sidecar fixtures. Parse template YAML with the target's existing runner first, or a narrow <code>node --test</code> fallback, to test triggers, owner choice, publication toggles, and ordering without publishing anything.</p><div class="tags"><span class="pill">CLI fixtures</span><span class="pill">workflow shape</span><span class="pill">isolated copies</span></div></div></article>
+          </div>
+        </section>
+
+        <section id="verification">
+          <div class="section-heading"><span class="step-number">04</span><h2>Verification contract</h2></div>
+          <div class="two-column">
+            <div class="surface">
+              <h3>Local checks after approval</h3>
+              <ul class="checklist">
+                <li>Install the CLI with Bun and update only <code>bun.lock</code>.</li>
+                <li>Run <code>bun run skills:bundle</code> then <code>bun run skills:check</code>.</li>
+                <li>Run real Changesets fixtures without publish commands.</li>
+                <li>Run typecheck, tests, lint, format check, and site build.</li>
+                <li>Review the working tree and run <code>git diff --check</code>.</li>
+              </ul>
+            </div>
+            <div class="surface">
+              <h3>Target workflow invariants</h3>
+              <ul class="checklist">
+                <li>No release setup before explicit release intent.</li>
+                <li>Only selected release units are configured.</li>
+                <li>One tag/GitHub Release owner per path.</li>
+                <li>Mutating release CI is branch-gated and non-cancellable.</li>
+                <li>Prerelease publication/deployment is explicitly selected.</li>
+                <li>Registry jobs wait for all required owner inputs.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code" style="margin-top:18px"><code>Local result ≠ remote CI ≠ registry publication ≠ GitHub Release ≠ production deployment</code></div>
+        </section>
+
+        <section id="risks">
+          <div class="section-heading"><span class="step-number">05</span><h2>Risks and boundaries</h2></div>
+          <div class="risk-table" role="table" aria-label="Risks and mitigations">
+            <div class="risk-head">Risk</div><div class="risk-head">Level</div><div class="risk-head">Planned handling</div>
+            <div>Python sidecar is mistaken for Python package metadata.</div><div><span class="severity high">High</span></div><div>Private release-coordination descriptor only; fixture asserts <code>pyproject.toml</code> stays untouched.</div>
+            <div>Release creation is duplicated or fails halfway.</div><div><span class="severity high">High</span></div><div>Choose one owner and require an explicit rerunnable custom command, or stop at version PR.</div>
+            <div>Credentials or publishing appear without authority.</div><div><span class="severity high">High</span></div><div>Ask for registry, packages, access, and authentication. Omit any publish job when information is missing.</div>
+            <div>Supporting skills are unavailable in an isolated installation.</div><div><span class="severity medium">Medium</span></div><div>Bundle local references and preserve entrypoint fallbacks; request explicit-only skill invocation rather than claim it ran.</div>
+            <div>Catalog/reference counts drift.</div><div><span class="severity medium">Medium</span></div><div>Register the skill once, regenerate references, and validate all nine isolated installs plus the dynamic site catalog.</div>
+            <div>Production needs stronger validation in the future.</div><div><span class="severity low">Low</span></div><div>ADR 0002 records the current trust policy. Existing target safeguards remain untouched.</div>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-heading"><span class="step-number">06</span><h2>Explicit non-goals</h2></div>
+          <div class="surface non-goals">
+            <p>No npm publication for this skills repository. No local <code>.changeset/</code>, release workflow, registry secret, tag, GitHub Release, Docker policy, GitOps path, generic deployment map, Python adapter, or PyPI integration. Existing target release workflows and safeguards remain owner-controlled.</p>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        Canonical source: <code>plan.md</code>. This HTML page is the review surface. Approval authorizes only the listed local implementation scope.
+      </footer>
+    </div>
+    <script>
+      document.querySelector(".theme-toggle").addEventListener("click", () => {
+        const dark = !document.documentElement.classList.contains("dark");
+        document.documentElement.classList.toggle("dark", dark);
+        localStorage.setItem("release-plan-theme", dark ? "dark" : "light");
+      });
+    </script>
+  </body>
+</html>

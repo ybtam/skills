@@ -1,0 +1,12 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fixture-python-package"
+version = "1.0.0"
+description = "A Python-shaped fixture for release coordination."
+requires-python = ">=3.11"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fixture_python_package"]

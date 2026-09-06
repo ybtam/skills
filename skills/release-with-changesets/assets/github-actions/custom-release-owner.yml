@@ -1,0 +1,46 @@
+# Copy only this target-owned custom release-owner path, not the native template.
+# The review contract, rather than this comment, is the workflow-shape evidence.
+name: Target custom release owner
+
+on:
+  push:
+    branches:
+      - __TARGET_CONFIRMED_RELEASE_BRANCH__
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: __TARGET_MANUAL_RELEASE_CONFIRMATION_DESCRIPTION__
+        required: true
+        type: string
+
+concurrency:
+  group: __TARGET_RELEASE_CONCURRENCY_GROUP__
+  cancel-in-progress: false
+
+permissions: __TARGET_RELEASE_PERMISSIONS__
+
+jobs:
+  release:
+    if: >-
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/__TARGET_CONFIRMED_RELEASE_BRANCH__'
+    runs-on: __TARGET_RUNNER__
+    steps:
+      - uses: __TARGET_CHECKOUT_ACTION__@__TARGET_CHECKOUT_ACTION_REF__
+      - name: Prepare target release
+        run: __TARGET_SETUP_AND_INSTALL_COMMAND__
+      - name: Approved rerunnable release owner
+        run: __TARGET_RERUNNABLE_RELEASE_COMMAND_CONSUMING_CHANGESETS_VERSIONS__
+
+  manual-dry-run:
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      github.ref == 'refs/heads/__TARGET_CONFIRMED_RELEASE_BRANCH__' &&
+      inputs.confirmation == '__TARGET_MANUAL_RELEASE_CONFIRMATION__'
+    runs-on: __TARGET_RUNNER__
+    steps:
+      - uses: __TARGET_CHECKOUT_ACTION__@__TARGET_CHECKOUT_ACTION_REF__
+      - name: Prepare target dry run
+        run: __TARGET_SETUP_AND_INSTALL_COMMAND__
+      - name: Explicitly confirmed target dry run
+        run: __TARGET_MANUAL_DRY_RUN_COMMAND__

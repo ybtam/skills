@@ -1,0 +1,53 @@
+# Copy only this native Changesets Action release-owner path, not the custom template.
+# The review contract, rather than this comment, is the workflow-shape evidence.
+name: Target Changesets release
+
+on:
+  push:
+    branches:
+      - __TARGET_CONFIRMED_RELEASE_BRANCH__
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: __TARGET_MANUAL_RELEASE_CONFIRMATION_DESCRIPTION__
+        required: true
+        type: string
+
+concurrency:
+  group: __TARGET_RELEASE_CONCURRENCY_GROUP__
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    if: >-
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/__TARGET_CONFIRMED_RELEASE_BRANCH__'
+    runs-on: __TARGET_RUNNER__
+    steps:
+      - uses: __TARGET_CHECKOUT_ACTION__@__TARGET_CHECKOUT_ACTION_REF__
+      - name: Prepare target release
+        run: __TARGET_SETUP_AND_INSTALL_COMMAND__
+      - name: Approved version release outcome
+        uses: __TARGET_CHANGESETS_ACTION__@__TARGET_CHANGESETS_ACTION_REF__
+        with:
+          version: __TARGET_CHANGESETS_VERSION_COMMAND__
+          # __TARGET_NATIVE_PUBLISH_INPUT_OR_EMPTY__
+        env:
+          __TARGET_CHANGESETS_TOKEN_ENV__: ${{ secrets.__TARGET_CHANGESETS_TOKEN_SECRET__ }}
+
+  manual-dry-run:
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      github.ref == 'refs/heads/__TARGET_CONFIRMED_RELEASE_BRANCH__' &&
+      inputs.confirmation == '__TARGET_MANUAL_RELEASE_CONFIRMATION__'
+    runs-on: __TARGET_RUNNER__
+    steps:
+      - uses: __TARGET_CHECKOUT_ACTION__@__TARGET_CHECKOUT_ACTION_REF__
+      - name: Prepare target dry run
+        run: __TARGET_SETUP_AND_INSTALL_COMMAND__
+      - name: Explicitly confirmed target dry run
+        run: __TARGET_MANUAL_DRY_RUN_COMMAND__

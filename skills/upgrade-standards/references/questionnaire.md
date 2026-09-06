@@ -1,5 +1,9 @@
 # Inspect, interview, review
 
+Inspect the repository, then ask whether the owner intends to set up release automation. If the answer is yes, begin this ordered interview: (1) topology and selected units, including fixed, linked, ignored and private-unit handling; (2) publication outcome, including registry, selected package(s), access level, and the exact target-owned publish command when publication is selected; (3) one release owner; (4) stable or prerelease channel, with separate prerelease GitHub Release, registry-publication and production answers; (5) release-notes source; (6) existing workflow authentication; (7) confirmed release branch; and (8) optional repository-owned production. Release setup becomes eligible only after every decision is settled and the target plan is approved. Keep the setup conditional and do not infer an answer.
+
+For `setup-repo`, install and verify the selected skills before triggering `grill-with-docs`. Request explicit invocation when the host requires it; keep the bundled questionnaire fallback available when the skill cannot be invoked. For `adopt-standards`, `setup-repo`, `upgrade-standards` and `migrate-to-monorepo`, inspect release capability and ask whether the owner intends to set up release automation. A yes answer begins the ordered release interview; setup is eligible only after all decisions are settled and the target plan is approved.
+
 ## Before questions
 
 Read available project guidance, recorded standards, runtime/lockfiles, workspace layout, CI, agent configuration, and Git status. Facts are the agent's work. Preserve unrelated edits; a wrong repository or unresolved Git conflict needs the user's attention. Do not migrate while answering an explanatory question.

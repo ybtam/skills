@@ -18,27 +18,22 @@
   },
   "areas": {
     "structure": {
-      "version": "0.1.0",
-      "checks": [
-        "Seven standalone skill installs verified",
-        "Root and workspace fixture commands passed",
-        "Shared config paths resolved"
-      ]
+      "version": "0.2.0",
+      "checks": ["bun run skills:bundle passed for 9 skills", "skills:check passed for 9 skills"]
     },
     "tooling": {
-      "version": "0.1.0",
+      "version": "0.2.0",
       "checks": [
-        "Bun 1.4.2 frozen install passed",
-        "Oxlint Perfectionist natural sorting proof passed",
-        "Type checking and formatting passed"
+        "@changesets/cli 3.0.2 development dependency installed",
+        "Fixture bun install --frozen-lockfile passed"
       ]
     },
     "verification": {
-      "version": "0.1.0",
+      "version": "0.2.0",
       "checks": [
-        "12 Vitest tests passed",
-        "14 static pages verified",
-        "Browser search, clipboard, navigation and mobile checks passed"
+        "bun run check passed with 57 Vitest tests, including the 25-test Changesets CLI and workflow-contract suite",
+        "bun run build passed; check-site validated 16 pages plus the 404 page, including /skills/release-with-changesets/",
+        "Isolated Changesets CLI fixtures passed for private package, selected JavaScript monorepo, Python sidecar preservation, and workflow shapes"
       ]
     },
     "agents": {
@@ -57,77 +52,56 @@
         "Docker Compose configuration passed",
         "Local Docker image build passed; publishing excluded"
       ]
+    },
+    "release": {
+      "status": "declined",
+      "checks": [
+        "The collection intentionally has no Changesets configuration or target release workflow",
+        "Registry publication is not configured"
+      ],
+      "settings": {
+        "registryPublication": "not-configured"
+      },
+      "reason": "release-with-changesets guides target repositories; this GitHub-folder-distributed collection has no root release system."
     }
   },
   "lastRun": {
-    "skill": "setup-repo",
+    "skill": "upgrade-standards",
     "skillVersion": "0.1.0",
-    "targetVersion": "0.1.0",
-    "areas": ["structure", "tooling", "verification", "agents", "delivery"],
+    "targetVersion": "0.2.0",
+    "areas": ["structure", "tooling", "verification", "release"],
     "status": "complete",
     "checks": [
       {
-        "name": "Seven standalone skill installs verified",
+        "name": "Approved release-with-changesets baseline plan and review recorded",
         "status": "passed"
       },
       {
-        "name": "Root and workspace fixture commands passed",
+        "name": "@changesets/cli 3.0.2 development dependency installed",
         "status": "passed"
       },
       {
-        "name": "Shared config paths resolved",
+        "name": "bun run skills:bundle passed for 9 skills",
         "status": "passed"
       },
       {
-        "name": "Bun 1.4.2 frozen install passed",
+        "name": "bun run skills:check passed for 9 skills",
         "status": "passed"
       },
       {
-        "name": "Oxlint Perfectionist natural sorting proof passed",
+        "name": "bun run check passed with 57 Vitest tests, including the 25-test Changesets CLI and workflow-contract suite",
         "status": "passed"
       },
       {
-        "name": "Type checking and formatting passed",
+        "name": "bun run build passed; check-site validated 16 pages plus the 404 page, including /skills/release-with-changesets/",
         "status": "passed"
       },
       {
-        "name": "12 Vitest tests passed",
+        "name": "Isolated Changesets CLI fixtures passed for private package, selected JavaScript monorepo, Python sidecar preservation, and workflow shapes",
         "status": "passed"
       },
       {
-        "name": "14 static pages verified",
-        "status": "passed"
-      },
-      {
-        "name": "Browser search, clipboard, navigation and mobile checks passed",
-        "status": "passed"
-      },
-      {
-        "name": "Mandatory root letter and Matt setup configuration present",
-        "status": "passed"
-      },
-      {
-        "name": "43 upstream revisions verified",
-        "status": "passed"
-      },
-      {
-        "name": "Codegraph CLI and MCP query passed",
-        "status": "passed"
-      },
-      {
-        "name": "Plannotator approved structured review recorded",
-        "status": "passed"
-      },
-      {
-        "name": "GitHub Actions prepared",
-        "status": "passed"
-      },
-      {
-        "name": "Docker Compose configuration passed",
-        "status": "passed"
-      },
-      {
-        "name": "Local Docker image build passed; publishing excluded",
+        "name": "Fixture bun install --frozen-lockfile passed",
         "status": "passed"
       }
     ],
