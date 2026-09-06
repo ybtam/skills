@@ -1,0 +1,71 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Iris theme plan</title><script>try{document.documentElement.classList.toggle('dark',(localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'))==='dark')}catch(e){}</script><style>:root{--bg:oklch(0.976531 0.003855 303.226);--fg:oklch(0.222003 0.03479 328.979);--line:oklch(0.869608 0.018226 303.859);--accent:oklch(0.525348 0.15373 294.176)}html.dark{--bg:oklch(0.225975 0.031062 293.741);--fg:oklch(0.990339 0.008411 325.64);--line:oklch(0.40874 0.058536 295.893);--accent:oklch(0.671712 0.169136 293.929)}body{max-width:940px;margin:40px auto;padding:0 24px 60px;font:17px/1.7 system-ui;background:var(--bg);color:var(--fg)}h1{font-size:42px;line-height:1.2}h2{margin-top:36px;border-top:1px solid var(--line);padding-top:20px}a{color:var(--accent)}table{border-collapse:collapse;width:100%;font-size:15px}td,th{padding:12px;text-align:left;border:1px solid var(--line)}button{float:right;padding:9px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:6px;cursor:pointer}li{margin-bottom:8px}</style></head><body><button id="theme">Toggle preview theme</button><h1>Iris theme and dark mode</h1>
+<p>Apply the Iris palette from T3 Code to the existing website and add persistent light/dark selection.</p>
+<h2>Source and design</h2>
+<p>Use the exact Iris light palette and its existing dark variant from <a href="https://github.com/pingdotgg/t3code/blob/f8b4c464b4760d73e0ece7e68011c738803d8b69/packages/shared/src/themePalettes.ts">themePalettes.ts</a>. This is a color-theme change: retain the current typography, page structure and content.</p>
+<p>The source is MIT licensed, copyright 2026 T3 Tools Inc. Include the required license notice and a source comment with the revision for the copied palette values. Copy only the tokens used by the website, not T3 Code's theme framework or unrelated palettes.</p>
+<h2>Color mapping</h2>
+<table>
+<thead>
+<tr>
+<th>Website role</th>
+<th>Iris token</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Page/header background</td>
+<td>canvas / chrome</td>
+</tr>
+<tr>
+<td>Primary and secondary text</td>
+<td>text / textMuted</td>
+</tr>
+<tr>
+<td>Card and raised panels</td>
+<td>surface / surfaceRaised / surfaceOverlay</td>
+</tr>
+<tr>
+<td>Borders and inputs</td>
+<td>border / input</td>
+</tr>
+<tr>
+<td>Buttons and emphasized text</td>
+<td>accent / accentForeground</td>
+</tr>
+<tr>
+<td>Secondary controls and hover</td>
+<td>secondary / secondaryForeground / toolbarControlHover</td>
+</tr>
+<tr>
+<td>Focus indication</td>
+<td>focus</td>
+</tr>
+<tr>
+<td>Code and installation commands</td>
+<td>codeBackground / codeForeground</td>
+</tr>
+</tbody>
+</table>
+<p>Replace hardcoded green, lime, white and gray values across cards, links, search, buttons, callouts, code blocks and focus states with semantic tokens. Keep hover states and text readable in both modes. Update the small brand/favicon treatment to match Iris. Use the same theme on the standalone 404 page.</p>
+<h2>Theme behavior</h2>
+<p>Add an accessible native selector in the header with System, Light and Dark choices. Default to System and follow operating-system changes while that choice is active. An explicit Light or Dark choice persists across navigation and reloads. Keep the selector usable on mobile and by keyboard.</p>
+<p>Apply the saved preference before the first paint. Handle unavailable or invalid local storage without breaking rendering; fall back to System. Keep server-rendered content and the initial client render consistent. Any deliberate root theme-attribute difference must be handled narrowly; do not hide general hydration failures. Respect reduced motion and avoid adding broad color-transition animation.</p>
+<p>The 404 page should read the same preference and use the shared palette. Its return-to-catalog link must retain the configured hosting base. It can inherit the preference without adding a second settings UI.</p>
+<h2>Implementation boundary</h2>
+<ul>
+<li>Add a small shared Iris CSS token source, consumed by the main stylesheet and the generated 404 page.</li>
+<li>Add a focused theme preference module and header control; keep initialization logic reusable by the static 404 generator where practical.</li>
+<li>Update root document initialization, stylesheet colors, favicon, and 404 generation.</li>
+<li>Add attribution and focused verification. No new theme library or dependency is required.</li>
+<li>Preserve both root-path Docker hosting and /skills/ GitHub Pages hosting. Published skill content and standards are outside this change.</li>
+</ul>
+<h2>Verification</h2>
+<ul>
+<li>Check the copied token values against the pinned upstream source.</li>
+<li>Test preference resolution for missing, invalid and unavailable storage, manual overrides, and System behavior.</li>
+<li>Run lint, formatting, types and tests, then build both hosting variants and validate static output.</li>
+<li>Inspect catalog, a skill, a standards page and 404 in light and dark modes at desktop/mobile widths. Verify focus visibility, contrast, text/controls, persistence, OS preference changes and a clean console.</li>
+<li>Verify dark preference is applied before app hydration and that no light-theme flash is introduced during a reload.</li>
+<li>Deliver verified local changes and screenshots for review. Commit and publication follow when requested.</li>
+</ul>
+<p>Implementation starts after the recorded Plannotator approval.</p><script>document.getElementById('theme').onclick=()=>{const dark=document.documentElement.classList.toggle('dark');try{localStorage.setItem('theme',dark?'dark':'light')}catch(e){}}</script></body></html>

@@ -1,7 +1,9 @@
 import { createRootRoute, HeadContent, Link, Outlet, Scripts } from "@tanstack/react-router";
 
+import { ThemeSelector } from "../components/ThemeSelector";
 import { withBase } from "../lib/site-path";
 import appStyles from "../styles.css?url";
+import { themeInitializationScript } from "../theme/preference";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -21,8 +23,10 @@ export const Route = createRootRoute({
 
 function Root() {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        {/* The saved theme is the only intentional pre-hydration root-attribute change. */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitializationScript }} />
         <HeadContent />
       </head>
       <body>
@@ -31,11 +35,14 @@ function Root() {
             <span className="brand-mark">Y</span>
             <span>ybtam / skills</span>
           </Link>
-          <nav aria-label="Main navigation">
-            <Link to="/">Catalog</Link>
-            <Link to="/standards">Standards</Link>
-            <a href="https://github.com/ybtam/skills">GitHub ↗</a>
-          </nav>
+          <div className="header-actions">
+            <nav aria-label="Main navigation">
+              <Link to="/">Catalog</Link>
+              <Link to="/standards">Standards</Link>
+              <a href="https://github.com/ybtam/skills">GitHub ↗</a>
+            </nav>
+            <ThemeSelector />
+          </div>
         </header>
         <main>
           <Outlet />

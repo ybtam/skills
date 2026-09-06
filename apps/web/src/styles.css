@@ -1,14 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap");
+@import "./theme/iris.css";
+
 :root {
-  --ink: #15211d;
-  --muted: #63706a;
-  --line: #dce3dc;
-  --paper: #f7f8f4;
-  --lime: #d5ee62;
-  --orange: #f3a26b;
   font-family: "DM Sans", sans-serif;
-  color: var(--ink);
-  background: var(--paper);
+  color: var(--text);
+  background: var(--canvas);
 }
 * {
   box-sizing: border-box;
@@ -41,7 +37,7 @@ nav {
 }
 .brand-mark {
   align-items: center;
-  background: var(--lime);
+  background: var(--accent);
   border-radius: 50%;
   display: flex;
   font-family: "Playfair Display";
@@ -51,14 +47,14 @@ nav {
   width: 34px;
 }
 nav {
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 13px;
   gap: 28px;
 }
 nav a:hover,
 .text-link:hover,
 .back-link:hover {
-  color: #688000;
+  color: var(--accent);
 }
 .page-shell {
   margin: auto;
@@ -70,7 +66,7 @@ nav a:hover,
 }
 .eyebrow,
 .aside-label {
-  color: #718000;
+  color: var(--accent);
   font-family: "DM Mono", monospace;
   font-size: 11px;
   letter-spacing: 0.12em;
@@ -91,7 +87,7 @@ h1 {
   max-width: 900px;
 }
 h1 em {
-  color: #839d22;
+  color: var(--accent);
   font-family: "Playfair Display", serif;
   font-weight: 600;
   letter-spacing: -0.05em;
@@ -106,7 +102,7 @@ h3 {
   letter-spacing: -0.03em;
 }
 .hero-copy {
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 18px;
   line-height: 1.55;
   max-width: 470px;
@@ -124,23 +120,23 @@ h3 {
   padding: 14px 20px;
 }
 .button-dark {
-  background: var(--ink);
-  color: white;
+  background: var(--accent);
+  color: var(--accent-foreground);
 }
 .button-light {
-  background: var(--lime);
-  color: var(--ink);
+  background: var(--secondary);
+  color: var(--secondary-foreground);
 }
 .button:hover {
   transform: translateY(-2px);
 }
 .text-link,
 .back-link {
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 13px;
 }
 .catalog-section {
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--border);
   padding: 80px 0;
 }
 .section-intro {
@@ -153,14 +149,14 @@ h3 {
   margin-bottom: 0;
 }
 .section-intro > p {
-  color: var(--muted);
+  color: var(--text-muted);
   line-height: 1.55;
   max-width: 330px;
 }
 .search {
   align-items: center;
-  background: white;
-  border: 1px solid var(--line);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 8px;
   display: flex;
   gap: 10px;
@@ -169,7 +165,7 @@ h3 {
   padding: 12px 15px;
 }
 .search span {
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 22px;
 }
 .search input {
@@ -184,8 +180,8 @@ h3 {
   grid-template-columns: repeat(3, 1fr);
 }
 .skill-card {
-  background: white;
-  border: 1px solid var(--line);
+  background: var(--surface);
+  border: 1px solid var(--border);
   min-height: 245px;
   padding: 25px;
   position: relative;
@@ -194,22 +190,22 @@ h3 {
     box-shadow 0.2s;
 }
 .skill-card:hover {
-  box-shadow: 0 12px 30px #15211d12;
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--text) 8%, transparent);
   transform: translateY(-3px);
 }
 .skill-card:nth-child(3n + 2) {
-  background: #edf3db;
+  background: var(--surface-raised);
 }
 .skill-card:nth-child(3n + 3) {
-  background: #fbe8d6;
+  background: var(--surface-overlay);
 }
 .card-number {
-  color: var(--muted);
+  color: var(--text-muted);
   font-family: "DM Mono";
   font-size: 12px;
 }
 .skill-card p {
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 14px;
   line-height: 1.55;
   max-width: 290px;
@@ -221,7 +217,7 @@ h3 {
   right: 24px;
 }
 .empty {
-  color: var(--muted);
+  color: var(--text-muted);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -229,26 +225,26 @@ h3 {
 }
 .callout {
   align-items: end;
-  background: var(--ink);
-  color: white;
+  background: var(--accent);
+  color: var(--accent-foreground);
   display: grid;
   gap: 30px;
   grid-template-columns: 1.1fr 1fr auto;
   padding: 48px;
 }
 .callout h2 {
-  color: var(--lime);
+  color: var(--accent-foreground);
   margin: 0;
 }
 .callout p {
-  color: #bac5bd;
+  color: var(--accent-foreground);
   line-height: 1.5;
   margin: 0;
   max-width: 300px;
 }
 footer {
-  border-top: 1px solid var(--line);
-  color: var(--muted);
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
   display: flex;
   font-family: "DM Mono";
   font-size: 11px;
@@ -268,13 +264,13 @@ footer {
   font-size: clamp(3.2rem, 8vw, 7rem);
 }
 .detail-heading > p:last-child {
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 18px;
   line-height: 1.55;
   max-width: 550px;
 }
 .detail-layout {
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--border);
   display: grid;
   gap: 80px;
   grid-template-columns: 250px 1fr;
@@ -287,7 +283,7 @@ aside {
   gap: 20px;
 }
 aside code {
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 11px;
   line-height: 1.5;
   overflow-wrap: anywhere;
@@ -305,7 +301,7 @@ aside .button {
   margin: 42px 0 12px;
 }
 .prose p {
-  color: #43504a;
+  color: var(--text);
 }
 .prose ol {
   padding-left: 22px;
@@ -320,8 +316,8 @@ aside .button {
   margin-top: 80px;
 }
 .standard-card {
-  background: white;
-  border: 1px solid var(--line);
+  background: var(--surface);
+  border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   min-height: 260px;
@@ -332,19 +328,19 @@ aside .button {
   margin-bottom: 0;
 }
 .standard-card > p {
-  color: var(--muted);
+  color: var(--text-muted);
   line-height: 1.55;
 }
 .standard-card a {
-  color: #718000;
+  color: var(--accent);
   font-size: 13px;
   margin-top: auto;
 }
 .install-command {
   align-items: center;
-  background: var(--ink);
+  background: var(--code-background);
   border-radius: 8px;
-  color: var(--lime);
+  color: var(--code-foreground);
   display: flex;
   font-family: "DM Mono";
   font-size: 12px;
@@ -358,10 +354,10 @@ aside .button {
   overflow-wrap: anywhere;
 }
 .install-command button {
-  background: var(--lime);
+  background: var(--accent);
   border: 0;
   border-radius: 5px;
-  color: var(--ink);
+  color: var(--accent-foreground);
   cursor: pointer;
   font: inherit;
   padding: 9px 12px;
@@ -370,7 +366,7 @@ aside .button {
   transform: scale(0.97);
 }
 .references {
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--border);
   display: flex;
   flex-wrap: wrap;
   gap: 22px;
@@ -382,11 +378,11 @@ aside .button {
   margin-bottom: 0;
 }
 .references a {
-  color: #718000;
+  color: var(--accent);
   font-size: 13px;
 }
 .standard-prose {
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--border);
   margin-top: 80px;
   padding-top: 35px;
 }
@@ -428,7 +424,7 @@ aside .button {
 }
 
 :focus-visible {
-  outline: 3px solid #687719;
+  outline: 3px solid var(--focus);
   outline-offset: 4px;
 }
 .copy-status {
@@ -441,7 +437,7 @@ aside .button {
   max-width: 100%;
   overflow-x: auto;
   padding: 18px;
-  background: #edf0e8;
+  background: var(--code-background);
   border-radius: 8px;
 }
 .prose code {
@@ -456,5 +452,62 @@ aside .button {
   *::after {
     scroll-behavior: auto !important;
     transition: none !important;
+  }
+}
+
+/* Theme controls stay available at mobile widths. */
+.site-header {
+  flex-wrap: wrap;
+  gap: 20px;
+  background: var(--chrome);
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.theme-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  font-size: 13px;
+}
+.theme-selector select {
+  font: inherit;
+  padding: 8px 28px 8px 10px;
+  border: 1px solid var(--input);
+  border-radius: 6px;
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  cursor: pointer;
+}
+.theme-selector select:hover {
+  background: var(--control-hover);
+}
+.brand-mark {
+  color: var(--accent-foreground);
+}
+.search input {
+  background: transparent;
+  color: var(--text);
+}
+.search input::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+.skill-card p,
+.skill-card .card-number,
+.skill-card .card-arrow {
+  color: var(--text);
+}
+.prose pre {
+  color: var(--code-foreground);
+}
+@media (max-width: 760px) {
+  .header-actions {
+    justify-content: space-between;
+    width: 100%;
   }
 }

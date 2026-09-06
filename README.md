@@ -73,3 +73,7 @@ bun run build
 `SITE_BASE_PATH` must start and end with `/`. It controls assets, routing, document links and the 404 recovery link, and is part of the build cache key. The output stays in `apps/web/dist/client`; upload that directory itself rather than nesting it under another `skills/` folder. GitHub Pages serves its `404.html` for unknown paths.
 
 Pages must be configured with **GitHub Actions** as the repository's build source. The deployment uses the `github-pages` environment and the official upload/deploy actions. Docker remains an independent option; neither Pages deployment nor application commits change Harbor or a GitOps repository.
+
+## Website theme
+
+The website uses the Iris light and dark palettes from [T3 Code](https://github.com/pingdotgg/t3code/blob/f8b4c464b4760d73e0ece7e68011c738803d8b69/packages/shared/src/themePalettes.ts), copyright 2026 T3 Tools Inc., under its [MIT license](apps/web/public/licenses/t3code-MIT.txt). Only the relevant palette values are copied. The System / Light / Dark selector saves a local preference; System follows the operating system. The same palette and preference apply to the static 404 page.

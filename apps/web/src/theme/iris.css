@@ -1,0 +1,32 @@
+/*! Iris palette from T3 Code (MIT), copyright 2026 T3 Tools Inc.
+ * Source revision: f8b4c464b4760d73e0ece7e68011c738803d8b69
+ * See apps/web/public/licenses/t3code-MIT.txt. */
+:root {
+  color-scheme: light dark;
+  --canvas: light-dark(oklch(0.976531 0.003855 303.226), oklch(0.225975 0.031062 293.741));
+  --chrome: light-dark(oklch(0.976531 0.003855 303.226), oklch(0.225975 0.031062 293.741));
+  --surface: light-dark(oklch(0.976531 0.003855 303.226), oklch(0.225975 0.031062 293.741));
+  --surface-raised: light-dark(oklch(0.953326 0.004536 307.676), oklch(0.335291 0.026008 296.394));
+  --surface-overlay: light-dark(oklch(0.936665 0.005041 310.132), oklch(0.386739 0.024023 297.509));
+  --text: light-dark(oklch(0.222003 0.03479 328.979), oklch(0.990339 0.008411 325.64));
+  --text-muted: light-dark(oklch(0.543042 0.018894 325.652), oklch(0.640465 0.016197 304.171));
+  --border: light-dark(oklch(0.869608 0.018226 303.859), oklch(0.40874 0.058536 295.893));
+  --input: light-dark(oklch(0.834773 0.023405 303.676), oklch(0.46756 0.065775 296.265));
+  --focus: light-dark(oklch(0.525348 0.15373 294.176), oklch(0.671712 0.169136 293.929));
+  --accent: light-dark(oklch(0.525348 0.15373 294.176), oklch(0.671712 0.169136 293.929));
+  --accent-foreground: light-dark(oklch(0.990339 0.008411 325.64), oklch(0.222003 0.03479 328.979));
+  --secondary: light-dark(oklch(0.941387 0.014687 300.474), oklch(0.325405 0.063614 294.23));
+  --secondary-foreground: light-dark(
+    oklch(0.222003 0.03479 328.979),
+    oklch(0.990339 0.008411 325.64)
+  );
+  --control-hover: light-dark(oklch(0.914882 0.022965 299.986), oklch(0.372436 0.07841 294.204));
+  --code-background: light-dark(oklch(0.95997 0.004338 306.542), oklch(0.281873 0.028308 295.193));
+  --code-foreground: light-dark(oklch(0.222003 0.03479 328.979), oklch(0.990339 0.008411 325.64));
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
