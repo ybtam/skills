@@ -10,7 +10,11 @@ Explain Node.js and Bun as runtimes separately from pnpm and Bun package managem
 
 Offer TanStack Start or Next.js for web apps. Select relevant TanStack packages, shadcn/ui and ReUI by actual need. Multiple apps may share one backend; this is not an MVC requirement. Offer Hono for a separately deployed API, optional oRPC for its contract, Zod for validation, and Drizzle/PostgreSQL for persistence. Native and non-TypeScript projects need their own documented tool choices rather than a forced TypeScript scaffold.
 
+When working with React, read [React Compiler](integrations.md#react-compiler) for the conditional lint and transform guidance.
+
 Use Oxlint and Oxfmt. Run Perfectionist natural sorting through Oxlint's JS-plugin support, never an ESLint runner. Prove selected rules produce diagnostics and safe fixes with the actual versions; check formatter interaction. If incompatible, report the precise rule/API/version failure and ask about resolution instead of weakening the requirement. Other lint/format rules belong to the project's questionnaire.
+
+For JavaScript and TypeScript projects using Oxlint, include [anti-slop](integrations.md#anti-slop) in the proposed lint setup. Install its official `install-anti-slop` skill and invoke it when the approved scope includes configuring the rules. Preserve project-specific rule choices and report new findings separately from installation success.
 
 Use Vitest where appropriate, Storybook for reusable UI, and browser tests for critical journeys. Verify format, lint, types, meaningful tests and production build where applicable. Explain skipped checks and baseline failures.
 
