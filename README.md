@@ -11,7 +11,7 @@ npx skills@latest add ybtam/skills --skill setup-repo
 
 Select your agents and keep project scope. The repository must be published before the GitHub commands can install this implementation. For a local checkout, replace `ybtam/skills` with its absolute path.
 
-The catalog contains nine skills: eight baseline skills and the specialized `tune-agent-instructions` audit skill.
+The catalog contains ten skills: eight baseline skills and two specialized guidance skills.
 
 | Skill                   | Use it for                                                                 |
 | ----------------------- | -------------------------------------------------------------------------- |
@@ -24,6 +24,17 @@ The catalog contains nine skills: eight baseline skills and the specialized `tun
 | update-dependencies     | Dependency updates with documented major-version migrations                |
 | release-with-changesets | Target-repository Changesets release setup and GitHub Actions release CI   |
 | tune-agent-instructions | Auditing and improving agent guidance while preserving explicit boundaries |
+| improve-agent-docs      | Creating and organizing AGENTS.md and CLAUDE.md with scoped references     |
+
+## Improve agent documents
+
+Install `improve-agent-docs` to create or reorganize AGENTS.md and CLAUDE.md, verify their scope and references, and preserve deliberate project policies. It applies progressive disclosure from [Matt Pocock’s guide](https://www.aihero.dev/a-complete-guide-to-agents-md), with host compatibility checked against current documentation.
+
+```sh
+npx skills@latest add ybtam/skills --skill improve-agent-docs
+```
+
+Use `tune-agent-instructions` for behavioral diagnosis across prompts, skills, and instructions. Each skill works independently.
 
 ## Tune agent guidance
 
@@ -49,7 +60,7 @@ Setup uses [Matt Pocock's engineering skills and setup workflow](https://github.
 
 ## Website and local container
 
-The original seven baseline skills were implemented and checked before the website setup. The current collection has eight baseline skills plus the specialized `tune-agent-instructions` skill (nine skills total). The TanStack Start app prerenders the catalog and full standard documents from repository sources.
+The original seven baseline skills were implemented and checked before the website setup. The current collection has eight baseline skills plus two specialized guidance skills (ten skills total). The TanStack Start app prerenders the catalog and full standard documents from repository sources.
 
 ```sh
 bun run dev

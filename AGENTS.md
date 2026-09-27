@@ -2,22 +2,15 @@
 
 Dear agent,
 
-This repository publishes portable skills and the standards they use. Read the approved plan in `.codex/plans/2026-09-05-repository-skills/plan.md` when changing their scope. Build and verify all skills before extending the website.
+This repository publishes portable skills and their engineering standards using Bun. Before changes, read the [contribution workflow](docs/agents/contributing.md). For scope changes, consult the [approved repository plan](.codex/plans/2026-09-05-repository-skills/plan.md). Build and verify all skills before extending the website.
 
-Keep the code small and readable. Every abstraction needs a concrete use. Preserve unrelated work; questions about the repository are read-only. If Git history or a conflict prevents the intended change, explain it rather than creating a worktree to force a resolution. Do not remove directories, kill servers, force-push, or introduce hashing to solve routine problems.
+Keep code small and meaningful. Preserve unrelated work; questions are read-only. If Git history or conflicts block the task, explain the issue instead of creating a worktree to force resolution. Do not remove directories, kill servers, force-push, or introduce hashing for routine problems.
 
-Edit baseline guidance in `standards/`, then run `bun run skills:bundle`. The copies inside skills are distribution artifacts. Each skill must work when installed alone; read `skills/AGENTS.md` before authoring one. Read `CONTEXT.md` for our domain terms, and create ADRs only for consequential trade-offs.
+For substantive setup or migration plans, write Markdown and self-contained HTML under `.codex/plans/`, open the HTML in Plannotator with a structured approval gate, and wait for approval. Existing approval covers the agreed scope. Preserve project choices and never report unverified standards as applied. Distinguish local verification, remote CI, publishing, and live deployment.
 
-Keep applications in `apps/`, shared code in `packages/` when it has real consumers, and shared configuration in `configs/`. Organize domain code into contexts and named feature folders with nearby tests. Add a local letter only when that boundary has distinct instructions.
+Use the best available host model for `AGENTS.md` revisions and plans. Use Luna for bounded delegation when it earns its cost; keep single-pass work local and escalate hard problems only when needed.
 
-Use the repository scripts for checks and report what actually passed. Tests should verify behavior, not wording. Perfectionist runs through Oxlint; an ESLint runner is not a fallback. Preserve deliberate project choices during migrations and never report an unverified standard as applied.
+For skill work, read the [authoring letter](skills/AGENTS.md); for website work, read its [local letter](apps/web/AGENTS.md). Use [CONTEXT.md](CONTEXT.md) for domain terms. For engineering skill setup, follow the [GitHub issue workflow](docs/agents/issue-tracker.md), [triage vocabulary](docs/agents/triage-labels.md), and [domain-document conventions](docs/agents/domain.md). Creating issues or sending comments still requires task authorization.
 
-For substantive new setup or migration plans, write Markdown and self-contained HTML under `.codex/plans/`, open the HTML in Plannotator with a structured approval gate, and wait for approval. Existing approval applies to the agreed scope. Keep local verification, remote CI, publishing, and live deployment distinct.
-
-Use the best model available in the host for any `AGENTS.md` authoring or revision and for plan generation. Use Luna for bounded day-to-day delegation when it earns its cost. Keep single-pass work local and escalate hard problems only when needed. Review the outcome against the specification and then for code quality.
-
-Thank you for making this understandable to the next person.
-
-For engineering skill setup, use GitHub Issues as described in `docs/agents/issue-tracker.md`, the triage vocabulary in `docs/agents/triage-labels.md`, and the domain-document conventions in `docs/agents/domain.md`. These were configured through Matt Pocock's setup templates; creating an issue or sending a comment still requires the user's task authorization.
-
+Thank you,
 Yi

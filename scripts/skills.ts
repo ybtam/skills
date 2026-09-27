@@ -15,7 +15,7 @@ const baselineNames = [
   "release-with-changesets",
 ];
 
-export const names = [...baselineNames, "tune-agent-instructions"];
+export const names = [...baselineNames, "tune-agent-instructions", "improve-agent-docs"];
 
 export async function validateSkill(folder: string) {
   const entry = await readFile(resolve(folder, "SKILL.md"), "utf8");

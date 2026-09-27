@@ -40,15 +40,21 @@ test("references cannot escape the installed skill", async () => {
   await expect(validateSkill(destination)).rejects.toThrow("escapes installed skill");
 });
 
-test("bundling preserves specialized references without adding baseline documents", async () => {
-  const destination = await mkdtemp(resolve(tmpdir(), "ybtam-bundle-test-"));
-  temporary.push(destination);
-  await cp(resolve(root, "standards"), resolve(destination, "standards"), { recursive: true });
-  await cp(resolve(root, "skills"), resolve(destination, "skills"), { recursive: true });
-  const references = resolve(destination, "skills/tune-agent-instructions/references");
-  const guide = await readFile(resolve(references, "astra-guidance.md"), "utf8");
-  await bundle(destination, false);
-  expect(await readdir(references)).toEqual(["astra-guidance.md"]);
-  expect(await readFile(resolve(references, "astra-guidance.md"), "utf8")).toBe(guide);
-  await expect(bundle(destination, true)).resolves.toBeUndefined();
-});
+test.each([
+  ["tune-agent-instructions", "astra-guidance.md"],
+  ["improve-agent-docs", "compatibility.md"],
+])(
+  "bundling preserves %s references without adding baseline documents",
+  async (name, reference) => {
+    const destination = await mkdtemp(resolve(tmpdir(), "ybtam-bundle-test-"));
+    temporary.push(destination);
+    await cp(resolve(root, "standards"), resolve(destination, "standards"), { recursive: true });
+    await cp(resolve(root, "skills"), resolve(destination, "skills"), { recursive: true });
+    const references = resolve(destination, "skills", name, "references");
+    const guide = await readFile(resolve(references, reference), "utf8");
+    await bundle(destination, false);
+    expect(await readdir(references)).toEqual([reference]);
+    expect(await readFile(resolve(references, reference), "utf8")).toBe(guide);
+    await expect(bundle(destination, true)).resolves.toBeUndefined();
+  },
+);
