@@ -24,7 +24,7 @@ Use package-manager workspaces and Turborepo when several apps or shared package
 
 Share TypeScript, Oxlint, and formatter configuration from `configs/`. Use each tool's supported reuse mechanism and small consumer-specific overrides. Verify paths from root and app commands; not all tools support `extends`.
 
-Create a mandatory root `AGENTS.md` as a readable letter. Begin with the user's working rules: low-complexity code, bounded changes, read-only questions, meaningful verification, careful Git operations, and the selected review process. Ask which agents are used and adapt their supported guidance discovery. Add local letters for distinct app/context/feature instructions without repeating inherited rules. Preserve authored guidance when adopting standards.
+Create a mandatory root `AGENTS.md` as a readable letter. Begin with the user's working rules: low-complexity code, bounded changes, read-only questions, meaningful verification, careful Git operations, and the selected review process. Ask which agents are used and adapt their supported guidance discovery. Add local letters for distinct app/context/feature instructions without repeating inherited rules. Preserve authored guidance when adopting standards. Keep the root focused on project purpose, essential tooling, and repository-wide constraints. Route conditional guidance through task-triggered links to existing documents; distinguish optional reading from eagerly loaded imports. Verify commands and paths, reconcile contradictions using scope and host priority, and ask about unresolved choices before removing deliberate rules. Preserve unique CLAUDE.md content and verify selected-agent discovery before adding compatibility files.
 
 ## Skills, local development and delivery
 

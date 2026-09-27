@@ -9,7 +9,7 @@ metadata:
 
 Use the best model available in the host for any authorized `AGENTS.md` authoring or revision.
 
-Use this workflow when the user wants to improve agent guidance or investigate instruction-related behavior. Default to a read-only audit. An explanation or audit request does not authorize edits.
+Use this workflow to diagnose instruction-related behavior across agent guidance, skills, and prompts. Document organization and AGENTS.md / CLAUDE.md discovery alone are the separate `improve-agent-docs` workflow; this audit does not require that skill. Default to a read-only audit. An explanation or audit request does not authorize edits.
 
 ## Inspect the intended behavior
 
